@@ -10,7 +10,9 @@ import com.vkochenkov.wordlegame.presentation.NavigationRoute
 
 class GameViewModel : ViewModel() {
 
-    private val initialState = GameState(hiddenWord = listOf('к','н','и','г','а'))
+    private val initialState = GameState(
+        hiddenWord = listOf('к','н','и','г','а')
+    )
     private val mScreenState = MutableLiveData(initialState)
     val screenState: LiveData<GameState> = mScreenState
 
