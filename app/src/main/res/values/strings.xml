@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">WordleGame</string>
+    <string name="app_name">Вордли</string>
+    <string name="start_game">Начать игру</string>
+    <string name="continue_game">Продолжить</string>
+    <string name="settings">Настройки</string>
+    <string name="how_to_play">Как играть?</string>
+    <string name="exit">Выйти</string>
 </resources>

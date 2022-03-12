@@ -27,13 +27,13 @@ fun AppContent() {
             Scaffold { paddingValues ->
                 NavHost(
                     navController = navController,
-                    startDestination = "home",
+                    startDestination = NavigationRoute.HOME.name,
                     modifier = Modifier.padding(paddingValues)
                 ) {
-                    composable("home") {
+                    composable(NavigationRoute.HOME.name) {
                         HomeScreen(navController)
                     }
-                    composable("game") {
+                    composable(NavigationRoute.GAME.name) {
                         GameScreen()
                     }
                 }
