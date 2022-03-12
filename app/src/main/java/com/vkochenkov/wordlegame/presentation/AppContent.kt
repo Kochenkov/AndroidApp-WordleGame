@@ -1,0 +1,43 @@
+package com.vkochenkov.wordlegame.presentation
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.vkochenkov.wordlegame.presentation.screen.game.GameScreen
+import com.vkochenkov.wordlegame.presentation.screen.home.HomeScreen
+import com.vkochenkov.wordlegame.presentation.theme.WordleGameTheme
+
+@Composable
+fun AppContent() {
+
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+   // val currentRoute = navBackStackEntry?.destination?.route
+
+    WordleGameTheme {
+        Surface(color = MaterialTheme.colors.background) {
+            Scaffold { paddingValues ->
+                NavHost(
+                    navController = navController,
+                    startDestination = "home",
+                    modifier = Modifier.padding(paddingValues)
+                ) {
+                    composable("home") {
+                        HomeScreen(navController)
+                    }
+                    composable("game") {
+                        GameScreen()
+                    }
+                }
+            }
+        }
+    }
+}
