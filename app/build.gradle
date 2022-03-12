@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk sdk_version
 
     defaultConfig {
         applicationId "com.vkochenkov.wordlegame"
-        minSdk 21
-        targetSdk 32
+        minSdk min_sdk_version
+        targetSdk sdk_version
+
         versionCode 1
         versionName "1.0"
 
@@ -57,4 +58,5 @@ dependencies {
 
     //inner modules
     implementation(project(path: ":domain"))
+    implementation(project(path: ":data"))
 }
