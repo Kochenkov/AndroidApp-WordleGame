@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.ui.theme
+package com.vkochenkov.wordlegame.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

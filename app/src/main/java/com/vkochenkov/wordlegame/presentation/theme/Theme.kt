@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.ui.theme
+package com.vkochenkov.wordlegame.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
