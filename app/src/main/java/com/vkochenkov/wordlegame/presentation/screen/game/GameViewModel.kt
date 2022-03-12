@@ -7,14 +7,17 @@ import com.vkochenkov.wordlegame.data.Dao
 import com.vkochenkov.wordlegame.data.RepositoryImpl
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.usecase.CheckWordUseCase
+import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
 
 class GameViewModel : ViewModel() {
 
     //todo use di
-    val checkWordUseCase = CheckWordUseCase(RepositoryImpl(Dao()))
+    val repository = RepositoryImpl(Dao())
+    val checkWordUseCase = CheckWordUseCase(repository)
+    val getRandomWordUseCase = GetRandomWordUseCase(repository)
 
     private val initialState = GameState(
-        hiddenWord = listOf('к', 'н', 'и', 'г', 'а')
+        hiddenWord = getRandomWordUseCase.execute(DEFAULT_NUMBER_OF_LETTERS)
     )
     private val mScreenState = MutableLiveData(initialState)
     val screenState: LiveData<GameState> = mScreenState

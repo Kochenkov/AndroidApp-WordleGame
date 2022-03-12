@@ -9,4 +9,8 @@ class RepositoryImpl(
     override fun isWordPresent(word: String): Boolean {
         return dao.isWordPresent(word)
     }
+
+    override fun getRandomWord(length: Int): String {
+        return dao.getRandomWord(length)
+    }
 }

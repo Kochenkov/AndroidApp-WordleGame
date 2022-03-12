@@ -11,16 +11,19 @@ class CheckWordUseCase(
         numberOfLetters: Int,
         hiddenWord: List<Char>,
         word: List<Char>,
-        callback: CheckWordCallback
-    )  {
+        callback: Callback
+    ) {
 
-        if (numberOfLetters!=word.size) {
+        if (numberOfLetters != word.size) {
             callback.onError(ErrorType.NOT_FULL_LINE)
         } else if (!repository.isWordPresent(word.toString())) {
             callback.onError(ErrorType.DOES_NOT_IN_DB)
         } else {
             //todo compare hidden word with word
-            callback.onSuccess()
+            for (i in 0..numberOfLetters) {
+
+            }
+            //callback.onSuccess()
         }
     }
 

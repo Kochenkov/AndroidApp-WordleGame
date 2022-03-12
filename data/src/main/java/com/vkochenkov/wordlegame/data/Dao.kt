@@ -10,4 +10,9 @@ class Dao {
         }
         return false
     }
+
+    fun getRandomWord(length: Int): String {
+        //todo use length after adding DB
+        return Storage.wordsList5.random()
+    }
 }
