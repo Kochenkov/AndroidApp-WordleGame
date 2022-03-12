@@ -7,11 +7,7 @@ const val DEFAULT_NUMBER_OF_LETTERS_PER_WORD = 5
 
 data class GameState(
     val field: List<List<Cell>> = List(DEFAULT_NUMBER_OF_ROWS) {
-        List(
-            DEFAULT_NUMBER_OF_LETTERS_PER_WORD
-        ) { Cell(
-            status = Cell.Status.Empty
-        ) }
+        List(DEFAULT_NUMBER_OF_LETTERS_PER_WORD) { Cell() }
     },
     val hiddenWord: List<Char>
 )
