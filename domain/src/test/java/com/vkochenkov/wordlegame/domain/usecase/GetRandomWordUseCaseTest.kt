@@ -1,6 +1,7 @@
 package com.vkochenkov.wordlegame.domain.usecase
 
 import com.vkochenkov.wordlegame.domain.Repository
+import com.vkochenkov.wordlegame.domain.model.Language
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -14,9 +15,11 @@ class GetRandomWordUseCaseTest {
     @Test
     fun `should return list of chars after get random word`() {
         val length = 5
-        Mockito.`when`(repository.getRandomWord(length)).thenReturn("test")
+        val lang = Language.RU
 
-        val actual = useCase.execute(length)
+        Mockito.`when`(repository.getRandomWord(lang, length)).thenReturn("test")
+
+        val actual = useCase.execute(lang, length)
         val expected = listOf('t','e','s','t')
         assertEquals(expected, actual)
 

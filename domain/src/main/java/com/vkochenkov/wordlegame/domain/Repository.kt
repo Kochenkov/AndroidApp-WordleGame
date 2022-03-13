@@ -1,9 +1,13 @@
 package com.vkochenkov.wordlegame.domain
 
+import com.vkochenkov.wordlegame.domain.model.Language
+
 interface Repository {
 
 
-    fun isWordPresent(word: String) : Boolean
+    fun isWordPresent(lang: Language, word: String) : Boolean
 
-    fun getRandomWord(length: Int): String
+    fun getRandomWord(lang: Language, length: Int): String
+
+    fun getKeyboard(lang: Language): List<List<Char>>
 }

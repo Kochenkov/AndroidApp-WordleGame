@@ -1,6 +1,7 @@
 package com.vkochenkov.wordlegame.di
 
 import com.vkochenkov.wordlegame.domain.usecase.CheckWordUseCase
+import com.vkochenkov.wordlegame.domain.usecase.GetKeyboardRepresentationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
 import org.koin.dsl.module
 
@@ -12,5 +13,9 @@ val domainModule = module {
 
     factory<CheckWordUseCase> {
         CheckWordUseCase(repository = get())
+    }
+
+    factory<GetKeyboardRepresentationUseCase> {
+        GetKeyboardRepresentationUseCase(repository = get())
     }
 }

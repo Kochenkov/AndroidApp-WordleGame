@@ -32,10 +32,19 @@ fun GameScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        screenState?.field?.forEach { field ->
+        screenState?.board?.forEach { line ->
             Row {
-                field.forEach {
-                    Cell(it)
+                line.forEach {
+                    BoardCell(it)
+                }
+            }
+
+        }
+        //todo  к низу экрана
+        screenState?.keyboard?.forEach { line ->
+            Row() {
+                line.forEach {
+                    KeyboardCell(it, Modifier.weight(1f))
                 }
             }
         }
@@ -43,7 +52,7 @@ fun GameScreen() {
 }
 
 @Composable
-fun Cell(cell: Cell) {
+fun BoardCell(cell: Cell) {
     Card(
         backgroundColor = Gray,
         modifier = Modifier
@@ -53,6 +62,26 @@ fun Cell(cell: Cell) {
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (cell.letter != null) {
+                Text(
+                    text = cell.letter.toString(),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun KeyboardCell(cell: Cell, modifier: Modifier) {
+    Card(
+        backgroundColor = Gray,
+        modifier = modifier
+            .height(50.dp)
+            .padding(2.dp)
+    ) {
+        Box(
             contentAlignment = Alignment.Center
         ) {
             if (cell.letter != null) {

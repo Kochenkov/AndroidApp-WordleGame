@@ -1,18 +1,27 @@
 package com.vkochenkov.wordlegame.data
 
+import com.vkochenkov.wordlegame.domain.model.Language
+
 class Dao {
 
-    fun isWordPresent(word: String): Boolean {
-        for (dictionaryWord in Storage.wordsList5) {
-            if (word.equals(dictionaryWord)) {
-                return true
+    fun isWordPresent(lang: Language, word: String): Boolean {
+        if (lang == Language.RU) {
+            for (dictionaryWord in StorageRu.wordsList5) {
+                if (word.equals(dictionaryWord)) {
+                    return true
+                }
             }
         }
         return false
     }
 
-    fun getRandomWord(length: Int): String {
-        //todo use length after adding DB
-        return Storage.wordsList5.random()
+    fun getRandomWord(lang: Language, length: Int): String {
+        //todo use $length and $lang after adding DB
+        return StorageRu.wordsList5.random()
+    }
+
+    fun getKeyboard(lang: Language): List<List<Char>> {
+        //todo use $lang after adding DB
+        return StorageRu.keyboardRepresentation
     }
 }
