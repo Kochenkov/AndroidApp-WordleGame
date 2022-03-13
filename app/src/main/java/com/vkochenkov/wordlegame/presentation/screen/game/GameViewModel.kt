@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vkochenkov.wordlegame.data.Dao
 import com.vkochenkov.wordlegame.data.RepositoryImpl
+import com.vkochenkov.wordlegame.domain.Repository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.usecase.CheckWordUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
 
-class GameViewModel : ViewModel() {
-
-    //todo use di
-    val repository = RepositoryImpl(Dao())
-    val checkWordUseCase = CheckWordUseCase(repository)
-    val getRandomWordUseCase = GetRandomWordUseCase(repository)
+class GameViewModel(
+    private val repository: Repository,
+    private val checkWordUseCase: CheckWordUseCase,
+    private val getRandomWordUseCase: GetRandomWordUseCase
+) : ViewModel() {
 
     private val initialState = GameState(
         hiddenWord = getRandomWordUseCase.execute(DEFAULT_NUMBER_OF_LETTERS)

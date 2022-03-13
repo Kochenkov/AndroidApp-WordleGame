@@ -14,17 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.R
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController
 ) {
 
-    val viewModel = viewModel<HomeViewModel>()
+    val viewModel = getViewModel<HomeViewModel>()
     val screenState by viewModel.screenState.observeAsState()
     val context = LocalContext.current
 

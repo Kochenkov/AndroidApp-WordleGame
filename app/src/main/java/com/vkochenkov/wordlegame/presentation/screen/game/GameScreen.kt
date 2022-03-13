@@ -14,14 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.presentation.theme.Gray
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun GameScreen() {
 
-    val viewModel = viewModel<GameViewModel>()
+    val viewModel = getViewModel<GameViewModel>()
     val screenState by viewModel.screenState.observeAsState()
     val context = LocalContext.current
 
