@@ -9,20 +9,10 @@ class GetKeyboardRepresentationUseCase(
 ) {
 
     fun execute(lang: Language): List<List<Cell>> {
-        val outerList = ArrayList<ArrayList<Cell>>()
-        val charsKeyboard = repository.getKeyboard(lang)
-        for (line in charsKeyboard) {
-            val outerLine = ArrayList<Cell>()
-            for (char in line) {
-                outerLine.add(
-                    Cell(
-                        letter = char,
-                        status = Cell.Status.DEFAULT
-                    )
-                )
+        return repository.getKeyboard(lang).map { list ->
+            list.map { char ->
+                Cell(char)
             }
-            outerList.add(outerLine)
         }
-        return outerList
     }
 }

@@ -18,7 +18,7 @@ class CheckWordUseCase(
 
         if (numberOfLetters != word.size) {
             callback.onError(ErrorType.NOT_FULL_LINE)
-        } else if (!repository.isWordPresent(lang, word.toString())) {
+        } else if (!repository.isWordPresent(lang, String(word.toCharArray()))) {
             callback.onError(ErrorType.DOES_NOT_IN_DB)
         } else {
             //todo compare hidden word with word
