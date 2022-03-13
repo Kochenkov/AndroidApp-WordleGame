@@ -8,11 +8,10 @@ import org.mockito.Mockito.mock
 class CheckWordUseCaseTest {
 
     private val repository = mock(Repository::class.java)
-    private val useCase = CheckWordUseCase(repository)
 
     @Test
     fun test() {
-        `when`(repository.isWordPresent("someWord")).thenReturn(true)
+        //`when`(repository.isWordPresent("someWord")).thenReturn(true)
 
         //useCase.execute("someWord")
     }

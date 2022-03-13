@@ -2,10 +2,10 @@ package com.vkochenkov.wordlegame.domain.model
 
 data class Cell(
     val letter: Char? = null,
-    val status: Status = Status.EMPTY
+    val status: Status = Status.DEFAULT
 ) {
     enum class Status {
-        EMPTY, //no entered letters
+        DEFAULT, //no entered letters
         PREFILL, //entered letters without validation
         PRESENT, //validated -> present but not in right place
         RIGHT, //validated -> in exact right place
