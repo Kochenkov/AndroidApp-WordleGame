@@ -56,7 +56,7 @@ fun GameScreen() {
                             }
                         }
 
-                        KeyboardCell(viewModel, cell, modifier)
+                        KeyboardButton(viewModel, cell, modifier)
                     }
                 }
             }
@@ -86,7 +86,7 @@ fun BoardCell(cell: Cell, modifier: Modifier) {
 }
 
 @Composable
-fun KeyboardCell(
+fun KeyboardButton(
     viewModel: GameViewModel,
     cell: Cell,
     modifier: Modifier
