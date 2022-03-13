@@ -25,6 +25,7 @@ class GameViewModel(
     private val currentLang = Language.RU
 
     private val initialState = GameState(
+        language = currentLang,
         hiddenWord = getRandomWordUseCase.execute(currentLang, DEFAULT_NUMBER_OF_LETTERS),
         keyboard = getKeyboardRepresentationUseCase.execute(currentLang)
     )
