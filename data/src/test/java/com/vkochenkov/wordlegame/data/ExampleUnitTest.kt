@@ -13,6 +13,6 @@ class ExampleUnitTest {
 
     @Test
     fun addition_isCorrect() {
-        print(StorageRu.alphabet)
+        assertTrue(false)
     }
 }
