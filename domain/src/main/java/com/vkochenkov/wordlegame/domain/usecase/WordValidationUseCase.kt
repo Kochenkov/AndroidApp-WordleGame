@@ -34,7 +34,10 @@ class WordValidationUseCase(
                 for (j in hiddenWord.indices) {
                     if (currentWord[i] == hiddenWord[j]) {
                         if ((hiddenWord[i] != currentWord[i]) && (outCells[j].letter != hiddenWord[j])) {
-                            outCells[i] = Cell(currentWord[i], Cell.Status.PRESENT)
+                            if (!outCells.contains(Cell(currentWord[i], Cell.Status.PRESENT))) {
+                                outCells[i] = Cell(currentWord[i], Cell.Status.PRESENT)
+                                break
+                            }
                         }
                     }
                 }
