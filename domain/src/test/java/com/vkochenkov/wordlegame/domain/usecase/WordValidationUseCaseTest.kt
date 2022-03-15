@@ -67,7 +67,7 @@ class WordValidationUseCaseTest {
         useCase.execute(
             lang = lang,
             numberOfLetters = 4,
-            numberOfRows = 2,
+            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -100,7 +100,7 @@ class WordValidationUseCaseTest {
         useCase.execute(
             lang = lang,
             numberOfLetters = 4,
-            numberOfRows = 2,
+            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -134,7 +134,7 @@ class WordValidationUseCaseTest {
         useCase.execute(
             lang = lang,
             numberOfLetters = 4,
-            numberOfRows = 2,
+            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -170,7 +170,7 @@ class WordValidationUseCaseTest {
             numberOfRows = 6,
             hiddenWord = hiddenWord,
             currentWord = word,
-            currentRow = 6,
+            currentRow = 5,
             callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {

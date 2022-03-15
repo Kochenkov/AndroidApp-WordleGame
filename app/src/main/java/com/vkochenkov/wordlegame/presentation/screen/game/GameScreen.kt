@@ -12,7 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
@@ -21,6 +23,7 @@ import com.vkochenkov.wordlegame.presentation.theme.Gray
 import com.vkochenkov.wordlegame.presentation.theme.Green
 import com.vkochenkov.wordlegame.presentation.theme.Whiter
 import com.vkochenkov.wordlegame.presentation.theme.Yellow
+import com.vkochenkov.wordlegame.util.toCorrectString
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -37,7 +40,7 @@ fun GameScreen() {
     screenState?.apply {
 
         if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
-            ShowAlertDialog(viewModel, gameStatus)
+            ShowAlertDialog(viewModel, gameStatus, hiddenWord.toCorrectString())
         }
 
         Column(
@@ -136,7 +139,8 @@ private fun KeyboardButton(
 @Composable
 private fun ShowAlertDialog(
     viewModel: GameViewModel,
-    gameStatus: GameStatus
+    gameStatus: GameStatus,
+    hiddenWord: String
 ) {
     val context = LocalContext.current
 
@@ -145,10 +149,15 @@ private fun ShowAlertDialog(
             viewModel.onBackPressed(context)
         },
         title = {
-            Text(text = "Game status: $gameStatus")
+            val text = when (gameStatus) {
+                GameStatus.VICTORY -> stringResource(R.string.victory)
+                GameStatus.LOSE -> stringResource(R.string.lose)
+                else -> ""
+            }
+            Text(text)
         },
         text = {
-            Text("Here is a text ")
+            Text(stringResource(R.string.lose) + " " + hiddenWord)
         },
         confirmButton = {
             Button(

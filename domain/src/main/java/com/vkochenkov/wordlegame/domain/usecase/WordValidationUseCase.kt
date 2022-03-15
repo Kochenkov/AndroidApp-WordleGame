@@ -28,13 +28,15 @@ class WordValidationUseCase(
 
             for (i in currentWord.indices) {
                 for (j in hiddenWord.indices) {
-                    //todo should test
                     if (currentWord[i]==hiddenWord[i]) {
                         outCells[i] = Cell(currentWord[i], Cell.Status.RIGHT)
                         break
                     } else {
                         if (currentWord[i]==hiddenWord[j]) {
-                            outCells[i] = Cell(currentWord[i], Cell.Status.PRESENT)
+                            //todo should improve logic
+                            if (outCells[j].status != Cell.Status.RIGHT) {
+                                outCells[i] = Cell(currentWord[i], Cell.Status.PRESENT)
+                            }
                             break
                         }
                     }
@@ -47,7 +49,7 @@ class WordValidationUseCase(
             val gameStatus = if (hiddenWord == currentWord) {
                 GameStatus.VICTORY
             } else {
-                if (currentRow>=numberOfRows) {
+                if (currentRow>=numberOfRows-1) { //currentRow counted from zero
                     GameStatus.LOSE
                 } else {
                     GameStatus.PLAYING
