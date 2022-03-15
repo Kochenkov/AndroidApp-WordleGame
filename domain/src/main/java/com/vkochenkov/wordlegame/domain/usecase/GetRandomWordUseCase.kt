@@ -13,6 +13,6 @@ class GetRandomWordUseCase(
         length: Int
     ): List<Char> {
         val stringWord = repository.getRandomWord(lang, length)
-        return stringWord.toCharArray().toList()
+        return stringWord.toList()
     }
 }

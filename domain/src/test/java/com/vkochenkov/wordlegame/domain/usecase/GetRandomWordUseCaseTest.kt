@@ -11,11 +11,12 @@ class GetRandomWordUseCaseTest {
 
     private val repository = Mockito.mock(Repository::class.java)
     private val useCase = GetRandomWordUseCase(repository)
+    private val lang = Language.RU
+
 
     @Test
     fun `should return list of chars after get random word`() {
         val length = 5
-        val lang = Language.RU
 
         Mockito.`when`(repository.getRandomWord(lang, length)).thenReturn("test")
 

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.Repository
@@ -13,9 +14,11 @@ import com.vkochenkov.wordlegame.domain.model.Language
 import com.vkochenkov.wordlegame.domain.usecase.CheckWordUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetKeyboardRepresentationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
+import com.vkochenkov.wordlegame.domain.usecase.UseCaseCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class GameViewModel(
-    private val repository: Repository,
     private val checkWordUseCase: CheckWordUseCase,
     private val getRandomWordUseCase: GetRandomWordUseCase,
     private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase
@@ -32,7 +35,6 @@ class GameViewModel(
 
     private val mScreenState = MutableLiveData(initialState)
     val screenState: LiveData<GameState> = mScreenState
-
 
     fun onKeyPressed(context: Context, cell: Cell) {
         cell.letter?.let { char ->
@@ -68,8 +70,10 @@ class GameViewModel(
     private fun addLetter(char: Char) {
         mScreenState.value?.let { state ->
             if (state.currentWord.size < state.numberOfLetters) {
+
                 val newWord = state.currentWord.toMutableList()
                 newWord.add(char)
+
                 val newBoard = state.board
                 for (i in newBoard.indices) {
                     if (i == state.currentRow) {
@@ -87,23 +91,38 @@ class GameViewModel(
     }
 
     private fun checkEnter(context: Context) {
-        mScreenState.value?.let {
-            checkWordUseCase.execute(
-                currentLang,
-                it.numberOfLetters,
-                it.hiddenWord,
-                it.currentWord,
-                object : CheckWordUseCase.Callback {
+        mScreenState.value?.let { state ->
+            viewModelScope.launch(Dispatchers.IO) {
+                checkWordUseCase.execute(
+                    state.language,
+                    state.numberOfLetters,
+                    state.numberOfRows,
+                    state.hiddenWord,
+                    state.currentWord,
+                    object : UseCaseCallback<CheckWordUseCase.ErrorType, Array<Cell>> {
 
-                    override fun onError(error: CheckWordUseCase.ErrorType) {
-                        Toast.makeText(context, error.name, Toast.LENGTH_SHORT).show()
-                    }
+                        override fun onError(error: CheckWordUseCase.ErrorType) {
+                            viewModelScope.launch(Dispatchers.Main) {
+                                Toast.makeText(context, error.name, Toast.LENGTH_SHORT).show()
+                            }
 
-                    override fun onSuccess(list: List<Cell>) {
-                        TODO("Not yet implemented")
+                        }
+
+                        override fun onSuccess(result: Array<Cell>) {
+                            viewModelScope.launch(Dispatchers.Main) {
+                                val newBoard = state.board
+                                newBoard[state.currentRow] = result
+                                val newState = state.copy(
+                                    board = newBoard,
+                                    currentRow = state.currentRow+1,
+                                    currentWord = listOf(),
+                                )
+                                mScreenState.postValue(newState)
+                            }
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

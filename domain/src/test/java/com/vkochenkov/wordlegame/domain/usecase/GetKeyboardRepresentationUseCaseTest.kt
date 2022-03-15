@@ -11,10 +11,10 @@ class GetKeyboardRepresentationUseCaseTest {
 
     private val repository = Mockito.mock(Repository::class.java)
     private val useCase = GetKeyboardRepresentationUseCase(repository)
+    private val lang = Language.RU
 
     @Test
     fun `should return list of cells after get chars list`() {
-        val lang = Language.RU
         Mockito.`when`(repository.getKeyboard(lang)).thenReturn(
             listOf(
                 listOf('1','2'),
