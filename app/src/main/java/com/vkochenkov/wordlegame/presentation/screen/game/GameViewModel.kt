@@ -131,6 +131,7 @@ class GameViewModel(
 
     fun onBackPressed(context: Context) {
         if (context is Activity) {
+            //todo should fix error with recursion
             context.onBackPressed()
         }
     }

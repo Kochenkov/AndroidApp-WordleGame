@@ -157,7 +157,7 @@ private fun ShowAlertDialog(
             Text(text)
         },
         text = {
-            Text(stringResource(R.string.lose) + " " + hiddenWord)
+            Text(stringResource(R.string.word_to_guess) + " " + hiddenWord)
         },
         confirmButton = {
             Button(
