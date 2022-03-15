@@ -1,5 +1,6 @@
 package com.vkochenkov.wordlegame.presentation.screen.game
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -10,7 +11,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
@@ -28,11 +28,16 @@ fun GameScreen() {
 
     val viewModel = getViewModel<GameViewModel>()
     val screenState by viewModel.screenState.observeAsState()
+    val context = LocalContext.current
+
+    BackHandler(enabled = true){
+        viewModel.onBackPressed(context)
+    }
 
     screenState?.apply {
 
-        if (gameStatus == GameStatus.VICTORY) {
-            ShowAlertDialog(viewModel)
+        if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
+            ShowAlertDialog(viewModel, gameStatus)
         }
 
         Column(
@@ -130,7 +135,8 @@ private fun KeyboardButton(
 
 @Composable
 private fun ShowAlertDialog(
-    viewModel: GameViewModel
+    viewModel: GameViewModel,
+    gameStatus: GameStatus
 ) {
     val context = LocalContext.current
 
@@ -139,7 +145,7 @@ private fun ShowAlertDialog(
             viewModel.onBackPressed(context)
         },
         title = {
-            Text(text = "Dialog Title")
+            Text(text = "Game status: $gameStatus")
         },
         text = {
             Text("Here is a text ")

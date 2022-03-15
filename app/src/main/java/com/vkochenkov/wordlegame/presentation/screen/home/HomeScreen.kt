@@ -1,5 +1,6 @@
 package com.vkochenkov.wordlegame.presentation.screen.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.R
+import com.vkochenkov.wordlegame.domain.model.GameStatus
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -27,32 +29,39 @@ fun HomeScreen(
     val screenState by viewModel.screenState.observeAsState()
     val context = LocalContext.current
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        item {
-            Item(R.string.start_game) { viewModel.onStartGamePressed(navController) }
-        }
-        screenState?.continueGame?.let {
-            if (it) {
-                item {
-                    Item(R.string.continue_game) { }
+    BackHandler(enabled = true){
+        viewModel.onBackPressed(context)
+    }
+
+    screenState?.apply {
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            item {
+                Item(R.string.start_game) { viewModel.onStartGamePressed(navController) }
+            }
+            lastGameStatus.let { status ->
+                if (status == GameStatus.PAUSE) {
+                    item {
+                        Item(R.string.continue_game) { viewModel.onContinueGamePressed(navController) }
+                    }
                 }
             }
-        }
-        item {
-            Item(R.string.settings) { }
-        }
-        item {
-            Item(R.string.how_to_play) { }
-        }
-        item {
-            Item(R.string.exit) {
-                viewModel.onExitPressed(context)
+            item {
+                Item(R.string.settings) { }
+            }
+            item {
+                Item(R.string.how_to_play) { }
+            }
+            item {
+                Item(R.string.exit) {
+                    viewModel.onBackPressed(context)
+                }
             }
         }
     }
