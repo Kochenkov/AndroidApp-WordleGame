@@ -13,12 +13,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
+import com.vkochenkov.wordlegame.presentation.theme.Gray
+import com.vkochenkov.wordlegame.presentation.theme.Green
 import com.vkochenkov.wordlegame.presentation.theme.Whiter
+import com.vkochenkov.wordlegame.presentation.theme.Yellow
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -67,7 +71,14 @@ fun GameScreen() {
 @Composable
 fun BoardCell(cell: Cell, modifier: Modifier) {
     Card(
-        backgroundColor = Whiter,
+        backgroundColor =
+        when (cell.status) {
+            Cell.Status.PRESENT -> Yellow
+            Cell.Status.WRONG -> Gray
+            Cell.Status.RIGHT -> Green
+            Cell.Status.DEFAULT -> Whiter
+            Cell.Status.PREFILL -> Whiter
+        },
         modifier = modifier
             .aspectRatio(1f)
             .padding(2.dp)

@@ -4,10 +4,10 @@ import com.vkochenkov.wordlegame.domain.Repository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.Language
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import java.util.*
 
 class CheckWordUseCaseTest {
 
@@ -20,7 +20,7 @@ class CheckWordUseCaseTest {
         val length = 4
         val hiddenWord = listOf('w', 'o', 'r', 'd')
         val word = listOf('w', 'o', 'r', 'd')
-        val expectedAnswer = arrayOf(
+        val expectedAnswer = listOf(
             Cell('w', Cell.Status.RIGHT),
             Cell('o', Cell.Status.RIGHT),
             Cell('r', Cell.Status.RIGHT),
@@ -34,16 +34,14 @@ class CheckWordUseCaseTest {
             numberOfRows = 1,
             hiddenWord = hiddenWord,
             word = word,
-            callback = object : UseCaseCallback<CheckWordUseCase.ErrorType, Array<Cell>> {
+            callback = object : UseCaseCallback<CheckWordUseCase.ErrorType, List<Cell>> {
 
                 override fun onError(error: CheckWordUseCase.ErrorType) {
-                    //NOP
+                    assertTrue(error.toString(), false)
                 }
 
-                override fun onSuccess(result: Array<Cell>) {
-                    println("actual: " + result.contentToString())
-                    println("expected: " +  expectedAnswer.contentToString())
-                    assertEquals(result, expectedAnswer)
+                override fun onSuccess(result: List<Cell>) {
+                    assertEquals(expectedAnswer, result)
                 }
             })
     }
@@ -53,13 +51,13 @@ class CheckWordUseCaseTest {
         val length = 4
         val hiddenWord = listOf('w', 'o', 'r', 'd')
         val word = listOf('c', 'o', 'a', 'r')
-        val expectedAnswer = arrayOf(
-            Cell('с', Cell.Status.WRONG),
+        val expectedAnswer = listOf(
+            Cell('c', Cell.Status.WRONG),
             Cell('o', Cell.Status.RIGHT),
             Cell('a', Cell.Status.WRONG),
             Cell('r', Cell.Status.PRESENT)
         )
-        `when`(repository.isWordPresent(lang, "word")).thenReturn(true)
+        `when`(repository.isWordPresent(lang, "coar")).thenReturn(true)
 
         useCase.execute(
             lang = lang,
@@ -67,16 +65,68 @@ class CheckWordUseCaseTest {
             numberOfRows = 1,
             hiddenWord = hiddenWord,
             word = word,
-            callback = object : UseCaseCallback<CheckWordUseCase.ErrorType, Array<Cell>> {
+            callback = object : UseCaseCallback<CheckWordUseCase.ErrorType, List<Cell>> {
 
                 override fun onError(error: CheckWordUseCase.ErrorType) {
-                    //NOP
+                    assertTrue(error.toString(), false)
                 }
 
-                override fun onSuccess(result: Array<Cell>) {
-                    println("actual: " + result.contentToString())
-                    println("expected: " +  expectedAnswer.contentToString())
-                    assertEquals(result, expectedAnswer)
+                override fun onSuccess(result: List<Cell>) {
+                    assertEquals(expectedAnswer, result)
+                }
+            })
+    }
+
+    @Test
+    fun `error length validation`() {
+        val length = 4
+        val hiddenWord = listOf('w', 'o', 'r', 'd')
+        val word = listOf('c', 'o', 'a')
+        val expectedError = CheckWordUseCase.ErrorType.NOT_FULL_LINE
+
+        `when`(repository.isWordPresent(lang, "coa")).thenReturn(true)
+
+        useCase.execute(
+            lang = lang,
+            numberOfLetters = length,
+            numberOfRows = 1,
+            hiddenWord = hiddenWord,
+            word = word,
+            callback = object : UseCaseCallback<CheckWordUseCase.ErrorType, List<Cell>> {
+
+                override fun onError(error: CheckWordUseCase.ErrorType) {
+                    assertEquals(expectedError, error)
+                }
+
+                override fun onSuccess(result: List<Cell>) {
+                    assertTrue(result.toString(), false)
+                }
+            })
+    }
+
+    @Test
+    fun `error db validation`() {
+        val length = 4
+        val hiddenWord = listOf('w', 'o', 'r', 'd')
+        val word = listOf('g', 'o', 'a', 'l')
+        val expectedError = CheckWordUseCase.ErrorType.DOES_NOT_IN_DB
+
+        `when`(repository.isWordPresent(lang, "goal")).thenReturn(false)
+
+        useCase.execute(
+            lang = lang,
+            numberOfLetters = length,
+            numberOfRows = 1,
+            hiddenWord = hiddenWord,
+            word = word,
+            callback = object : UseCaseCallback<CheckWordUseCase.ErrorType, List<Cell>> {
+
+                override fun onError(error: CheckWordUseCase.ErrorType) {
+                    assertEquals(expectedError, error)
+                }
+
+                override fun onSuccess(result: List<Cell>) {
+                    assertTrue(result.toString(), false)
                 }
             })
     }

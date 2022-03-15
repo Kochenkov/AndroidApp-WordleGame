@@ -14,7 +14,7 @@ class CheckWordUseCase(
         numberOfRows: Int,
         hiddenWord: List<Char>,
         word: List<Char>,
-        callback: UseCaseCallback<ErrorType, Array<Cell>>
+        callback: UseCaseCallback<ErrorType, List<Cell>>
     ) {
 
         if (numberOfLetters != word.size) {
@@ -22,20 +22,22 @@ class CheckWordUseCase(
         } else if (!repository.isWordPresent(lang, String(word.toCharArray()))) {
             callback.onError(ErrorType.DOES_NOT_IN_DB)
         } else {
-            val outCells = Array(numberOfLetters) { Cell() }
-            for (i in hiddenWord.indices) {
-                for (j in word.indices) {
+            val outCells = MutableList(numberOfLetters) { Cell() }
+            for (i in word.indices) {
+                for (j in hiddenWord.indices) {
                     //todo should test
-                    if (hiddenWord[i]==word[i]) {
+                    if (word[i]==hiddenWord[i]) {
                         outCells[i] = Cell(word[i], Cell.Status.RIGHT)
                         break
                     } else {
-                        if (hiddenWord[i]==word[j]) {
-                            outCells[i] = Cell(word[j], Cell.Status.PRESENT)
-                        } else {
-                            outCells[i] = Cell(word[j], Cell.Status.WRONG)
+                        if (word[i]==hiddenWord[j]) {
+                            outCells[i] = Cell(word[i], Cell.Status.PRESENT)
+                            break
                         }
                     }
+                }
+                if (outCells[i].letter == null) {
+                    outCells[i] = Cell(word[i], Cell.Status.WRONG)
                 }
             }
             callback.onSuccess(outCells)

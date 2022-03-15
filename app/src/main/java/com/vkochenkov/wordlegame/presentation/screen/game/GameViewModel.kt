@@ -99,7 +99,7 @@ class GameViewModel(
                     state.numberOfRows,
                     state.hiddenWord,
                     state.currentWord,
-                    object : UseCaseCallback<CheckWordUseCase.ErrorType, Array<Cell>> {
+                    object : UseCaseCallback<CheckWordUseCase.ErrorType, List<Cell>> {
 
                         override fun onError(error: CheckWordUseCase.ErrorType) {
                             viewModelScope.launch(Dispatchers.Main) {
@@ -108,14 +108,14 @@ class GameViewModel(
 
                         }
 
-                        override fun onSuccess(result: Array<Cell>) {
+                        override fun onSuccess(result: List<Cell>) {
                             viewModelScope.launch(Dispatchers.Main) {
                                 val newBoard = state.board
-                                newBoard[state.currentRow] = result
+                                newBoard[state.currentRow] = result.toTypedArray()
                                 val newState = state.copy(
                                     board = newBoard,
                                     currentRow = state.currentRow+1,
-                                    currentWord = listOf(),
+                                    currentWord = listOf()
                                 )
                                 mScreenState.postValue(newState)
                             }
