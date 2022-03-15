@@ -116,7 +116,6 @@ class WordValidationUseCaseTest {
             })
     }
 
-    //todo should fix case
     @Test
     fun `partial coincidence test 3`() {
         val hiddenWord = listOf('a', 'c', 'o', 'f')

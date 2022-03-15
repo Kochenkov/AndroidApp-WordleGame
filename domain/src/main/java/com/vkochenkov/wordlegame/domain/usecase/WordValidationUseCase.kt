@@ -27,17 +27,14 @@ class WordValidationUseCase(
             val outCells = MutableList(numberOfLetters) { Cell() }
 
             for (i in currentWord.indices) {
+                if (currentWord[i] == hiddenWord[i]) {
+                    outCells[i] = Cell(currentWord[i], Cell.Status.RIGHT)
+                    continue
+                }
                 for (j in hiddenWord.indices) {
-                    if (currentWord[i]==hiddenWord[i]) {
-                        outCells[i] = Cell(currentWord[i], Cell.Status.RIGHT)
-                        break
-                    } else {
-                        if (currentWord[i]==hiddenWord[j]) {
-                            //todo should improve logic
-                            if (outCells[j].status != Cell.Status.RIGHT) {
-                                outCells[i] = Cell(currentWord[i], Cell.Status.PRESENT)
-                            }
-                            break
+                    if (currentWord[i] == hiddenWord[j]) {
+                        if ((hiddenWord[i] != currentWord[i]) && (outCells[j].letter != hiddenWord[j])) {
+                            outCells[i] = Cell(currentWord[i], Cell.Status.PRESENT)
                         }
                     }
                 }
@@ -49,7 +46,7 @@ class WordValidationUseCase(
             val gameStatus = if (hiddenWord == currentWord) {
                 GameStatus.VICTORY
             } else {
-                if (currentRow>=numberOfRows-1) { //currentRow counted from zero
+                if (currentRow >= numberOfRows - 1) { //currentRow counted from zero
                     GameStatus.LOSE
                 } else {
                     GameStatus.PLAYING
