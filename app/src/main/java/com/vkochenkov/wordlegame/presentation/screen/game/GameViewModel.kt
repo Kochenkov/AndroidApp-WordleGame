@@ -8,10 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
-import com.vkochenkov.wordlegame.domain.Repository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.Language
-import com.vkochenkov.wordlegame.domain.usecase.CheckWordUseCase
+import com.vkochenkov.wordlegame.domain.usecase.WordValidationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetKeyboardRepresentationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
 import com.vkochenkov.wordlegame.domain.usecase.UseCaseCallback
@@ -19,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GameViewModel(
-    private val checkWordUseCase: CheckWordUseCase,
+    private val wordValidationUseCase: WordValidationUseCase,
     private val getRandomWordUseCase: GetRandomWordUseCase,
     private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase
 ) : ViewModel() {
@@ -93,29 +92,31 @@ class GameViewModel(
     private fun checkEnter(context: Context) {
         mScreenState.value?.let { state ->
             viewModelScope.launch(Dispatchers.IO) {
-                checkWordUseCase.execute(
+                wordValidationUseCase.execute(
                     state.language,
                     state.numberOfLetters,
                     state.numberOfRows,
                     state.hiddenWord,
                     state.currentWord,
-                    object : UseCaseCallback<CheckWordUseCase.ErrorType, List<Cell>> {
+                    state.currentRow,
+                    object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
-                        override fun onError(error: CheckWordUseCase.ErrorType) {
+                        override fun onError(error: WordValidationUseCase.ErrorType) {
                             viewModelScope.launch(Dispatchers.Main) {
                                 Toast.makeText(context, error.name, Toast.LENGTH_SHORT).show()
                             }
 
                         }
 
-                        override fun onSuccess(result: List<Cell>) {
+                        override fun onSuccess(result: WordValidationUseCase.Result) {
                             viewModelScope.launch(Dispatchers.Main) {
                                 val newBoard = state.board
-                                newBoard[state.currentRow] = result.toTypedArray()
+                                newBoard[state.currentRow] = result.word.toTypedArray()
                                 val newState = state.copy(
                                     board = newBoard,
                                     currentRow = state.currentRow+1,
-                                    currentWord = listOf()
+                                    currentWord = listOf(),
+                                    gameStatus = result.gameStatus
                                 )
                                 mScreenState.postValue(newState)
                             }

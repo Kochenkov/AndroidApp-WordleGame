@@ -2,6 +2,7 @@ package com.vkochenkov.wordlegame.presentation.screen.game
 
 import com.vkochenkov.wordlegame.domain.model.Language
 import com.vkochenkov.wordlegame.domain.model.Cell
+import com.vkochenkov.wordlegame.domain.model.GameStatus
 
 const val DEFAULT_NUMBER_OF_ROWS = 6
 const val DEFAULT_NUMBER_OF_LETTERS = 5
@@ -16,15 +17,7 @@ data class GameState(
     val hiddenWord: List<Char>,
     val currentWord: List<Char> = emptyList(),
     val currentRow: Int = 0,
-    val gameStatus: Status = Status.PLAYING,
+    val gameStatus: GameStatus = GameStatus.PLAYING,
     val language: Language
-) {
-    enum class Status {
-        PLAYING,
-        VICTORY,
-        LOSE,
-        PAUSE,
-        CLOSE
-    }
-}
+)
 
