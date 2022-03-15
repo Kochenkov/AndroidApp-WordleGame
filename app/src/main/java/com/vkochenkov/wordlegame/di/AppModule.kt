@@ -9,7 +9,7 @@ val appModule = module {
     
     viewModel<GameViewModel> {
         GameViewModel(
-            checkWordUseCase = get(),
+            wordValidationUseCase = get(),
             getRandomWordUseCase = get(),
             getKeyboardRepresentationUseCase = get()
         )

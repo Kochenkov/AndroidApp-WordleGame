@@ -3,10 +3,7 @@ package com.vkochenkov.wordlegame.presentation.screen.game
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
+import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.presentation.theme.Gray
 import com.vkochenkov.wordlegame.presentation.theme.Green
 import com.vkochenkov.wordlegame.presentation.theme.Whiter
@@ -30,37 +28,43 @@ fun GameScreen() {
 
     val viewModel = getViewModel<GameViewModel>()
     val screenState by viewModel.screenState.observeAsState()
-    val context = LocalContext.current
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(Modifier.padding(16.dp)) {
-            screenState?.board?.forEach { line ->
-                Row {
-                    line.forEach {
-                        BoardCell(it, Modifier.weight(1f))
-                    }
-                }
+    screenState?.apply {
 
-            }
+        if (gameStatus == GameStatus.VICTORY) {
+            ShowAlertDialog(viewModel)
         }
 
-        Column(Modifier.padding(2.dp)) {
-            screenState?.keyboard?.forEach { line ->
-                Row() {
-                    line.forEach { cell ->
-                        var modifier = Modifier.weight(1f)
-
-                        cell.letter?.let { char ->
-                            if (char == DELETE_CHAR || char == ENTER_CHAR) {
-                                modifier = Modifier.weight(1.5f)
-                            }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(Modifier.padding(16.dp)) {
+                board.forEach { line ->
+                    Row {
+                        line.forEach {
+                            BoardCell(it, Modifier.weight(1f))
                         }
+                    }
 
-                        KeyboardButton(viewModel, cell, modifier)
+                }
+            }
+
+            Column(Modifier.padding(2.dp)) {
+                keyboard.forEach { line ->
+                    Row() {
+                        line.forEach { cell ->
+                            var modifier = Modifier.weight(1f)
+
+                            cell.letter?.let { char ->
+                                if (char == DELETE_CHAR || char == ENTER_CHAR) {
+                                    modifier = Modifier.weight(1.5f)
+                                }
+                            }
+
+                            KeyboardButton(viewModel, cell, modifier)
+                        }
                     }
                 }
             }
@@ -69,7 +73,10 @@ fun GameScreen() {
 }
 
 @Composable
-fun BoardCell(cell: Cell, modifier: Modifier) {
+private fun BoardCell(
+    cell: Cell,
+    modifier: Modifier
+) {
     Card(
         backgroundColor =
         when (cell.status) {
@@ -97,7 +104,7 @@ fun BoardCell(cell: Cell, modifier: Modifier) {
 }
 
 @Composable
-fun KeyboardButton(
+private fun KeyboardButton(
     viewModel: GameViewModel,
     cell: Cell,
     modifier: Modifier
@@ -119,4 +126,39 @@ fun KeyboardButton(
             )
         }
     }
+}
+
+@Composable
+private fun ShowAlertDialog(
+    viewModel: GameViewModel
+) {
+    val context = LocalContext.current
+
+    AlertDialog(
+        onDismissRequest = {
+            viewModel.onBackPressed(context)
+        },
+        title = {
+            Text(text = "Dialog Title")
+        },
+        text = {
+            Text("Here is a text ")
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+
+                }) {
+                Text("This is the Confirm Button")
+            }
+        },
+        dismissButton = {
+            Button(
+                onClick = {
+
+                }) {
+                Text("This is the dismiss Button")
+            }
+        }
+    )
 }

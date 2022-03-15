@@ -1,5 +1,6 @@
 package com.vkochenkov.wordlegame.presentation.screen.game
 
+import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -99,7 +100,8 @@ class GameViewModel(
                     state.hiddenWord,
                     state.currentWord,
                     state.currentRow,
-                    object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+                    object :
+                        UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                         override fun onError(error: WordValidationUseCase.ErrorType) {
                             viewModelScope.launch(Dispatchers.Main) {
@@ -114,7 +116,7 @@ class GameViewModel(
                                 newBoard[state.currentRow] = result.word.toTypedArray()
                                 val newState = state.copy(
                                     board = newBoard,
-                                    currentRow = state.currentRow+1,
+                                    currentRow = state.currentRow + 1,
                                     currentWord = listOf(),
                                     gameStatus = result.gameStatus
                                 )
@@ -124,6 +126,12 @@ class GameViewModel(
                     }
                 )
             }
+        }
+    }
+
+    fun onBackPressed(context: Context) {
+        if (context is Activity) {
+            context.onBackPressed()
         }
     }
 }

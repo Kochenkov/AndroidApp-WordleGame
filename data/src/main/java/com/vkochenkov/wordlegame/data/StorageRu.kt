@@ -5,7 +5,7 @@ const val ENTER_CHAR = '='
 
 object StorageRu {
 
-    val wordsList5: List<String> = listOf("книга", "полка", "майка", "птица", "ларек")
+    val wordsList5: List<String> = listOf("книга", "полка", "майка", "птица", "ларек", "аграр")
 
     // '-' means delete, '=' means enter
     val keyboardRepresentation: List<List<Char>> = listOf(
