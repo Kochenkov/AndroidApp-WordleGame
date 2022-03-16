@@ -34,7 +34,7 @@ fun AppContent() {
                         HomeScreen(navController)
                     }
                     composable(NavigationRoute.GAME.name) {
-                        GameScreen()
+                        GameScreen(navController)
                     }
                 }
             }

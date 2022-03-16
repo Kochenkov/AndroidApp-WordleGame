@@ -14,11 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.GameStatus
+import com.vkochenkov.wordlegame.presentation.NavigationRoute
 import com.vkochenkov.wordlegame.presentation.theme.Gray
 import com.vkochenkov.wordlegame.presentation.theme.Green
 import com.vkochenkov.wordlegame.presentation.theme.Whiter
@@ -27,21 +29,24 @@ import com.vkochenkov.wordlegame.util.toCorrectString
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun GameScreen() {
+fun GameScreen(
+    navController: NavController
+) {
 
     val viewModel = getViewModel<GameViewModel>()
     val screenState by viewModel.screenState.observeAsState()
-    val context = LocalContext.current
-
-    BackHandler(enabled = true){
-        viewModel.onBackPressed(context)
-    }
 
     screenState?.apply {
 
-        if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
-            ShowAlertDialog(viewModel, gameStatus, hiddenWord.toCorrectString())
+        BackHandler(true) {
+            navController.navigate(NavigationRoute.HOME.name) {
+                //todo add logic to save state
+                launchSingleTop = true
+                popUpTo(NavigationRoute.GAME.name) { inclusive = true }
+            }
         }
+
+        EndGameDialog(viewModel, gameStatus, hiddenWord.toCorrectString())
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -137,43 +142,45 @@ private fun KeyboardButton(
 }
 
 @Composable
-private fun ShowAlertDialog(
+private fun EndGameDialog(
     viewModel: GameViewModel,
     gameStatus: GameStatus,
     hiddenWord: String
 ) {
     val context = LocalContext.current
 
-    AlertDialog(
-        onDismissRequest = {
-            viewModel.onBackPressed(context)
-        },
-        title = {
-            val text = when (gameStatus) {
-                GameStatus.VICTORY -> stringResource(R.string.victory)
-                GameStatus.LOSE -> stringResource(R.string.lose)
-                else -> ""
-            }
-            Text(text)
-        },
-        text = {
-            Text(stringResource(R.string.word_to_guess) + " " + hiddenWord)
-        },
-        confirmButton = {
-            Button(
-                onClick = {
+    if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
+        AlertDialog(
+            onDismissRequest = {
+                viewModel.onBackPressed(context)
+            },
+            title = {
+                val text = when (gameStatus) {
+                    GameStatus.VICTORY -> stringResource(R.string.victory)
+                    GameStatus.LOSE -> stringResource(R.string.lose)
+                    else -> ""
+                }
+                Text(text)
+            },
+            text = {
+                Text(stringResource(R.string.word_to_guess) + " " + hiddenWord)
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
 
-                }) {
-                Text("This is the Confirm Button")
-            }
-        },
-        dismissButton = {
-            Button(
-                onClick = {
+                    }) {
+                    Text("This is the Confirm Button")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
 
-                }) {
-                Text("This is the dismiss Button")
+                    }) {
+                    Text("This is the dismiss Button")
+                }
             }
-        }
-    )
+        )
+    }
 }

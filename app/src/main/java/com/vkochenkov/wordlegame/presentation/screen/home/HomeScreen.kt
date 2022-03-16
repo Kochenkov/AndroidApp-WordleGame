@@ -1,6 +1,5 @@
 package com.vkochenkov.wordlegame.presentation.screen.home
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,10 +27,6 @@ fun HomeScreen(
     val viewModel = getViewModel<HomeViewModel>()
     val screenState by viewModel.screenState.observeAsState()
     val context = LocalContext.current
-
-    BackHandler(enabled = true){
-        viewModel.onBackPressed(context)
-    }
 
     screenState?.apply {
 
