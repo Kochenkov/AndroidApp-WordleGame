@@ -1,6 +1,6 @@
 package com.vkochenkov.wordlegame.domain.usecase
 
-interface UseCaseCallback<E, R> {
+interface ExecutionCallback<E, R> {
 
     fun onError(error: E)
 

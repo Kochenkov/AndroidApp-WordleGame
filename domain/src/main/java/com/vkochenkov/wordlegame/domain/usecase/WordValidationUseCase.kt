@@ -16,7 +16,7 @@ class WordValidationUseCase(
         hiddenWord: List<Char>,
         currentWord: List<Char>,
         currentRow: Int,
-        callback: UseCaseCallback<ErrorType, Result>
+        callback: ExecutionCallback<ErrorType, Result>
     ) {
 
         if (numberOfLetters != currentWord.size) {

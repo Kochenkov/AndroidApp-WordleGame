@@ -14,7 +14,7 @@ import com.vkochenkov.wordlegame.domain.model.Language
 import com.vkochenkov.wordlegame.domain.usecase.WordValidationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetKeyboardRepresentationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
-import com.vkochenkov.wordlegame.domain.usecase.UseCaseCallback
+import com.vkochenkov.wordlegame.domain.usecase.ExecutionCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -101,7 +101,7 @@ class GameViewModel(
                     state.currentWord,
                     state.currentRow,
                     object :
-                        UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+                        ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                         override fun onError(error: WordValidationUseCase.ErrorType) {
                             viewModelScope.launch(Dispatchers.Main) {

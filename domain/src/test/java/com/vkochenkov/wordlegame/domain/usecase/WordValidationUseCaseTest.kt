@@ -38,7 +38,7 @@ class WordValidationUseCaseTest {
             currentWord = word,
             currentRow = 1,
             callback = object :
-                UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -71,7 +71,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -104,7 +104,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -137,7 +137,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -171,7 +171,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -204,7 +204,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 5,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -231,7 +231,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertEquals(expectedError, error)
@@ -258,7 +258,7 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : UseCaseCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertEquals(expectedError, error)
