@@ -1,20 +1,23 @@
 package com.vkochenkov.wordlegame.presentation.screen.game
 
-import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
+import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.domain.model.Language
 import com.vkochenkov.wordlegame.domain.usecase.WordValidationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetKeyboardRepresentationUseCase
 import com.vkochenkov.wordlegame.domain.usecase.GetRandomWordUseCase
 import com.vkochenkov.wordlegame.domain.usecase.ExecutionCallback
+import com.vkochenkov.wordlegame.presentation.MainActivity
+import com.vkochenkov.wordlegame.presentation.NavigationRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -129,9 +132,30 @@ class GameViewModel(
         }
     }
 
-    fun onBackPressed(context: Context) {
-        if (context is Activity) {
-            context.onBackPressed()
+    fun onBackPressed(navController: NavController) {
+        val newState = mScreenState.value?.copy(
+            gameStatus = GameStatus.PAUSE
+        )
+        MainActivity.currentGameState = newState
+        mScreenState.postValue(newState)
+        navController.navigate(NavigationRoute.HOME.name) {
+            launchSingleTop = true
+            popUpTo(NavigationRoute.GAME.name) { inclusive = true }
+        }
+    }
+
+    fun onGameStarted() {
+        MainActivity.let {
+            val newState = if (it.currentGameState != null && !it.isNewGame) {
+                it.currentGameState?.copy(
+                    gameStatus = GameStatus.PLAYING
+                )
+            } else {
+                mScreenState.value?.copy(
+                    gameStatus = GameStatus.PLAYING
+                )
+            }
+            mScreenState.postValue(newState)
         }
     }
 }

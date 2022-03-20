@@ -35,18 +35,15 @@ fun GameScreen(
 
     val viewModel = getViewModel<GameViewModel>()
     val screenState by viewModel.screenState.observeAsState()
+    viewModel.onGameStarted()
 
     screenState?.apply {
 
         BackHandler(true) {
-            navController.navigate(NavigationRoute.HOME.name) {
-                //todo add logic to save state
-                launchSingleTop = true
-                popUpTo(NavigationRoute.GAME.name) { inclusive = true }
-            }
+            viewModel.onBackPressed(navController)
         }
 
-        EndGameDialog(viewModel, gameStatus, hiddenWord.toCorrectString())
+        EndGameDialog(viewModel, gameStatus, hiddenWord.toCorrectString(), navController)
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -145,14 +142,14 @@ private fun KeyboardButton(
 private fun EndGameDialog(
     viewModel: GameViewModel,
     gameStatus: GameStatus,
-    hiddenWord: String
+    hiddenWord: String,
+    navController: NavController
 ) {
-    val context = LocalContext.current
 
     if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
         AlertDialog(
             onDismissRequest = {
-                viewModel.onBackPressed(context)
+                viewModel.onBackPressed(navController)
             },
             title = {
                 val text = when (gameStatus) {

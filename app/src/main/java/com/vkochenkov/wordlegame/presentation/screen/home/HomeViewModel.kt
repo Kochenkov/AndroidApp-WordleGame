@@ -7,19 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.domain.model.GameStatus
+import com.vkochenkov.wordlegame.presentation.MainActivity
 import com.vkochenkov.wordlegame.presentation.NavigationRoute
+import com.vkochenkov.wordlegame.presentation.screen.game.GameState
 
 class HomeViewModel : ViewModel() {
 
-    private val initialState = HomeState(GameStatus.NONE)
-    private val mScreenState = MutableLiveData(initialState)
-    val screenState: LiveData<HomeState> = mScreenState
-
     fun onStartGamePressed(navController: NavController) {
-        val newState = mScreenState.value?.copy(
-            lastGameStatus = GameStatus.PLAYING
-        )
-        mScreenState.postValue(newState)
+        MainActivity.isNewGame = true
+        navController.navigate(NavigationRoute.GAME.name)
+    }
+
+    fun onContinueGamePressed(navController: NavController) {
+        MainActivity.isNewGame = false
         navController.navigate(NavigationRoute.GAME.name)
     }
 
@@ -27,14 +27,5 @@ class HomeViewModel : ViewModel() {
         if (context is Activity) {
             context.onBackPressed()
         }
-    }
-
-    fun onContinueGamePressed(navController: NavController) {
-        //todo save?
-        val newState = mScreenState.value?.copy(
-            lastGameStatus = GameStatus.PLAYING
-        )
-        mScreenState.postValue(newState)
-        navController.navigate(NavigationRoute.GAME.name)
     }
 }
