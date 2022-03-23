@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
@@ -48,7 +49,7 @@ fun GameScreen(
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceAround
         ) {
             Column(Modifier.padding(16.dp)) {
                 board.forEach { line ->
@@ -106,6 +107,7 @@ private fun BoardCell(
         ) {
             if (cell.letter != null) {
                 Text(
+                    fontSize = 30.sp,
                     text = cell.letter.toString(),
                 )
             }
@@ -132,6 +134,7 @@ private fun KeyboardButton(
     ) {
         if (cell.letter != null) {
             Text(
+                fontSize = 20.sp,
                 text = cell.letter.toString(),
             )
         }
