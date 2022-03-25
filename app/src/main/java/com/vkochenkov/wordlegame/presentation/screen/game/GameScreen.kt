@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -36,10 +37,12 @@ fun GameScreen(
 
     val viewModel = getViewModel<GameViewModel>()
     val screenState by viewModel.screenState.observeAsState()
-    viewModel.onGameStarted()
+
+    LaunchedEffect(true) {
+        viewModel.onGameStarted()
+    }
 
     screenState?.apply {
-
         BackHandler(true) {
             viewModel.onBackPressed(navController)
         }

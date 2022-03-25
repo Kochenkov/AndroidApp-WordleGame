@@ -136,7 +136,7 @@ class GameViewModel(
         val newState = mScreenState.value?.copy(
             gameStatus = GameStatus.PAUSE
         )
-        MainActivity.currentGameState = newState
+        MainActivity.lastGameState = newState
         mScreenState.postValue(newState)
         navController.navigate(NavigationRoute.HOME.name) {
             launchSingleTop = true
@@ -146,8 +146,8 @@ class GameViewModel(
 
     fun onGameStarted() {
         MainActivity.let {
-            val newState = if (it.currentGameState != null && !it.isNewGame) {
-                it.currentGameState?.copy(
+            val newState = if (it.lastGameState != null && !it.isNewGame) {
+                it.lastGameState?.copy(
                     gameStatus = GameStatus.PLAYING
                 )
             } else {
@@ -155,6 +155,7 @@ class GameViewModel(
                     gameStatus = GameStatus.PLAYING
                 )
             }
+            MainActivity.lastGameState = null
             mScreenState.postValue(newState)
         }
     }

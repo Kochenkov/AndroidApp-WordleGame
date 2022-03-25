@@ -37,7 +37,7 @@ fun HomeScreen(
             Item(R.string.start_game) { viewModel.onStartGamePressed(navController) }
         }
 
-        if (MainActivity.currentGameState?.gameStatus == GameStatus.PAUSE) {
+        if (MainActivity.lastGameState?.gameStatus == GameStatus.PAUSE) {
             item {
                 Item(R.string.continue_game) { viewModel.onContinueGamePressed(navController) }
             }

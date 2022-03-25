@@ -9,7 +9,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         var isNewGame: Boolean = true
-        var currentGameState: GameState? = null
+        var lastGameState: GameState? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
