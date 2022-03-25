@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +23,6 @@ import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.GameStatus
-import com.vkochenkov.wordlegame.presentation.NavigationRoute
 import com.vkochenkov.wordlegame.presentation.theme.Gray
 import com.vkochenkov.wordlegame.presentation.theme.Green
 import com.vkochenkov.wordlegame.presentation.theme.Whiter
@@ -136,10 +136,26 @@ private fun KeyboardButton(
         }
     ) {
         if (cell.letter != null) {
-            Text(
-                fontSize = 20.sp,
-                text = cell.letter.toString(),
-            )
+            when (cell.letter) {
+                DELETE_CHAR -> {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_baseline_backspace_24),
+                        contentDescription = stringResource(R.string.delete),
+                    )
+                }
+                ENTER_CHAR -> {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_baseline_enter_24),
+                        contentDescription = stringResource(R.string.enter),
+                    )
+                }
+                else -> {
+                    Text(
+                        fontSize = 20.sp,
+                        text = cell.letter.toString(),
+                    )
+                }
+            }
         }
     }
 }
