@@ -7,7 +7,7 @@
     <string name="exit">Выйти</string>
     <string name="victory">Победа!</string>
     <string name="lose">Поражение!</string>
-    <string name="word_to_guess">Загаданное слово</string>
+    <string name="word_to_guess">Загаданное слово:</string>
     <string name="delete">удалить</string>
     <string name="enter">проверить</string>
 </resources>

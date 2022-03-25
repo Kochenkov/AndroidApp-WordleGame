@@ -171,7 +171,7 @@ private fun EndGameDialog(
     if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
         AlertDialog(
             onDismissRequest = {
-                viewModel.onBackPressed(navController)
+                viewModel.onBackPressed(navController, false)
             },
             title = {
                 val text = when (gameStatus) {
@@ -187,17 +187,17 @@ private fun EndGameDialog(
             confirmButton = {
                 Button(
                     onClick = {
-
+                        viewModel.onNewGame()
                     }) {
-                    Text("This is the Confirm Button")
+                    Text(stringResource(R.string.start_game))
                 }
             },
             dismissButton = {
                 Button(
                     onClick = {
-
+                        viewModel.onBackPressed(navController, false)
                     }) {
-                    Text("This is the dismiss Button")
+                    Text(stringResource(R.string.exit))
                 }
             }
         )

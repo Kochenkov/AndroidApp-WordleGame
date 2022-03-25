@@ -7,7 +7,7 @@
     <string name="exit">Exit</string>
     <string name="victory">You win!</string>
     <string name="lose">You lose!</string>
-    <string name="word_to_guess">Word to guess</string>
+    <string name="word_to_guess">Word to guess:</string>
     <string name="delete">delete</string>
     <string name="enter">enter</string>
 </resources>

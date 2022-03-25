@@ -30,14 +30,12 @@ class GameViewModel(
     //todo вынести в шеред префересы в data
     private val currentLang = Language.RU
 
-    private val initialState = GameState(
-        language = currentLang,
-        hiddenWord = getRandomWordUseCase.execute(currentLang, DEFAULT_NUMBER_OF_LETTERS),
-        keyboard = getKeyboardRepresentationUseCase.execute(currentLang)
-    )
-
-    private val mScreenState = MutableLiveData(initialState)
+    private val mScreenState = MutableLiveData(getInitialState())
     val screenState: LiveData<GameState> = mScreenState
+
+    fun onNewGame() {
+        mScreenState.postValue(getInitialState())
+    }
 
     fun onKeyPressed(context: Context, cell: Cell) {
         cell.letter?.let { char ->
@@ -46,6 +44,36 @@ class GameViewModel(
                 ENTER_CHAR -> checkEnter(context)
                 else -> addLetter(char)
             }
+        }
+    }
+
+    fun onBackPressed(navController: NavController, shouldSaveState: Boolean = true) {
+        if (shouldSaveState) {
+            val newState = mScreenState.value?.copy(
+                gameStatus = GameStatus.PAUSE
+            )
+            MainActivity.lastGameState = newState
+            mScreenState.postValue(newState)
+        }
+        navController.navigate(NavigationRoute.HOME.name) {
+            launchSingleTop = true
+            popUpTo(NavigationRoute.GAME.name) { inclusive = true }
+        }
+    }
+
+    fun onGameStarted() {
+        MainActivity.let {
+            val newState = if (it.lastGameState != null && !it.isNewGame) {
+                it.lastGameState?.copy(
+                    gameStatus = GameStatus.PLAYING
+                )
+            } else {
+                mScreenState.value?.copy(
+                    gameStatus = GameStatus.PLAYING
+                )
+            }
+            MainActivity.lastGameState = null
+            mScreenState.postValue(newState)
         }
     }
 
@@ -132,31 +160,11 @@ class GameViewModel(
         }
     }
 
-    fun onBackPressed(navController: NavController) {
-        val newState = mScreenState.value?.copy(
-            gameStatus = GameStatus.PAUSE
+    private fun getInitialState(): GameState {
+        return GameState(
+            language = currentLang,
+            hiddenWord = getRandomWordUseCase.execute(currentLang, DEFAULT_NUMBER_OF_LETTERS),
+            keyboard = getKeyboardRepresentationUseCase.execute(currentLang)
         )
-        MainActivity.lastGameState = newState
-        mScreenState.postValue(newState)
-        navController.navigate(NavigationRoute.HOME.name) {
-            launchSingleTop = true
-            popUpTo(NavigationRoute.GAME.name) { inclusive = true }
-        }
-    }
-
-    fun onGameStarted() {
-        MainActivity.let {
-            val newState = if (it.lastGameState != null && !it.isNewGame) {
-                it.lastGameState?.copy(
-                    gameStatus = GameStatus.PLAYING
-                )
-            } else {
-                mScreenState.value?.copy(
-                    gameStatus = GameStatus.PLAYING
-                )
-            }
-            MainActivity.lastGameState = null
-            mScreenState.postValue(newState)
-        }
     }
 }
