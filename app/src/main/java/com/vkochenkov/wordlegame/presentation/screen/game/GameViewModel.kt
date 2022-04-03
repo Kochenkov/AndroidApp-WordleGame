@@ -2,11 +2,13 @@ package com.vkochenkov.wordlegame.presentation.screen.game
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.model.Cell
@@ -136,9 +138,12 @@ class GameViewModel(
 
                         override fun onError(error: WordValidationUseCase.ErrorType) {
                             viewModelScope.launch(Dispatchers.Main) {
-                                Toast.makeText(context, error.name, Toast.LENGTH_SHORT).show()
+                                val errorName = when (error) {
+                                    WordValidationUseCase.ErrorType.NOT_FULL_LINE -> context.getString(R.string.error_length)
+                                    WordValidationUseCase.ErrorType.DOES_NOT_IN_DB -> context.getString(R.string.error_db)
+                                }
+                                Toast.makeText(context, errorName, Toast.LENGTH_SHORT).show()
                             }
-
                         }
 
                         override fun onSuccess(result: WordValidationUseCase.Result) {

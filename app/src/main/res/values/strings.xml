@@ -10,4 +10,6 @@
     <string name="word_to_guess">Загаданное слово:</string>
     <string name="delete">удалить</string>
     <string name="enter">проверить</string>
+    <string name="error_length">Слишком короткое слово</string>
+    <string name="error_db">Слово не найдено</string>
 </resources>

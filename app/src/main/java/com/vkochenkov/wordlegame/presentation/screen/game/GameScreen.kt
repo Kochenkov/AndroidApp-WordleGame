@@ -61,7 +61,6 @@ fun GameScreen(
                             BoardCell(it, Modifier.weight(1f))
                         }
                     }
-
                 }
             }
 

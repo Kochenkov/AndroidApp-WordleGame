@@ -10,4 +10,6 @@
     <string name="word_to_guess">Word to guess:</string>
     <string name="delete">delete</string>
     <string name="enter">enter</string>
+    <string name="error_length">Word is too short</string>
+    <string name="error_db">Word not found</string>
 </resources>
