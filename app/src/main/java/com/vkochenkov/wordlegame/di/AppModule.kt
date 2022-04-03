@@ -11,7 +11,8 @@ val appModule = module {
         GameViewModel(
             wordValidationUseCase = get(),
             getRandomWordUseCase = get(),
-            getKeyboardRepresentationUseCase = get()
+            getKeyboardRepresentationUseCase = get(),
+            languageRepository = get()
         )
     }
 

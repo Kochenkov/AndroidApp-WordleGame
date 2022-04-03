@@ -1,11 +1,11 @@
 package com.vkochenkov.wordlegame.data
 
-import com.vkochenkov.wordlegame.domain.Repository
+import com.vkochenkov.wordlegame.domain.WordsRepository
 import com.vkochenkov.wordlegame.domain.model.Language
 
-class RepositoryImpl(
+class WordsRepositoryImpl(
     private val dao: Dao
-): Repository {
+): WordsRepository {
 
     override fun isWordPresent(lang: Language, word: String): Boolean {
         return dao.isWordPresent(lang, word)

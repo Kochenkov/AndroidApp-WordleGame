@@ -8,14 +8,14 @@ import org.koin.dsl.module
 val domainModule = module {
 
     factory<GetRandomWordUseCase> {
-        GetRandomWordUseCase(repository = get())
+        GetRandomWordUseCase(wordsRepository = get())
     }
 
     factory<WordValidationUseCase> {
-        WordValidationUseCase(repository = get())
+        WordValidationUseCase(wordsRepository = get())
     }
 
     factory<GetKeyboardRepresentationUseCase> {
-        GetKeyboardRepresentationUseCase(repository = get())
+        GetKeyboardRepresentationUseCase(wordsRepository = get())
     }
 }

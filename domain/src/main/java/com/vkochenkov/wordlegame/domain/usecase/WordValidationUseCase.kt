@@ -1,12 +1,12 @@
 package com.vkochenkov.wordlegame.domain.usecase
 
-import com.vkochenkov.wordlegame.domain.Repository
+import com.vkochenkov.wordlegame.domain.WordsRepository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.domain.model.Language
 
 class WordValidationUseCase(
-    private val repository: Repository
+    private val wordsRepository: WordsRepository
 ) {
 
     fun execute(
@@ -21,7 +21,7 @@ class WordValidationUseCase(
 
         if (numberOfLetters != currentWord.size) {
             callback.onError(ErrorType.NOT_FULL_LINE)
-        } else if (!repository.isWordPresent(lang, String(currentWord.toCharArray()))) {
+        } else if (!wordsRepository.isWordPresent(lang, String(currentWord.toCharArray()))) {
             callback.onError(ErrorType.DOES_NOT_IN_DB)
         } else {
             val outCells = MutableList(numberOfLetters) { Cell() }

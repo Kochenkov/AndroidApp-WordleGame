@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
+import com.vkochenkov.wordlegame.domain.LanguageRepository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.domain.model.Language
@@ -26,11 +27,11 @@ import kotlinx.coroutines.launch
 class GameViewModel(
     private val wordValidationUseCase: WordValidationUseCase,
     private val getRandomWordUseCase: GetRandomWordUseCase,
-    private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase
+    private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase,
+    private val languageRepository: LanguageRepository
 ) : ViewModel() {
 
-    //todo вынести в шеред префересы в data
-    private val currentLang = Language.RU
+    private val currentLang = languageRepository.getLanguage()
 
     private val mScreenState = MutableLiveData(getInitialState())
     val screenState: LiveData<GameState> = mScreenState

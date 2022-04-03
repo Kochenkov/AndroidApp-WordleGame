@@ -1,6 +1,6 @@
 package com.vkochenkov.wordlegame.domain.usecase
 
-import com.vkochenkov.wordlegame.domain.Repository
+import com.vkochenkov.wordlegame.domain.WordsRepository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.domain.model.Language
@@ -12,7 +12,7 @@ import org.mockito.Mockito.mock
 
 class WordValidationUseCaseTest {
 
-    private val repository = mock(Repository::class.java)
+    private val repository = mock(WordsRepository::class.java)
     private val useCase = WordValidationUseCase(repository)
     private val lang = Language.RU
 

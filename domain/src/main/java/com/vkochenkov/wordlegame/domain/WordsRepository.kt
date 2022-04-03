@@ -2,8 +2,7 @@ package com.vkochenkov.wordlegame.domain
 
 import com.vkochenkov.wordlegame.domain.model.Language
 
-interface Repository {
-
+interface WordsRepository {
 
     fun isWordPresent(lang: Language, word: String) : Boolean
 

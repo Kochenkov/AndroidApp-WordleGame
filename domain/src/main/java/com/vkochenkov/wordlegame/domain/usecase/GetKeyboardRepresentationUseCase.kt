@@ -1,15 +1,15 @@
 package com.vkochenkov.wordlegame.domain.usecase
 
-import com.vkochenkov.wordlegame.domain.Repository
+import com.vkochenkov.wordlegame.domain.WordsRepository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.Language
 
 class GetKeyboardRepresentationUseCase(
-    private val repository: Repository
+    private val wordsRepository: WordsRepository
 ) {
 
     fun execute(lang: Language): List<List<Cell>> {
-        return repository.getKeyboard(lang).map { list ->
+        return wordsRepository.getKeyboard(lang).map { list ->
             list.map { char ->
                 Cell(char)
             }
