@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.domain.model
+package com.vkochenkov.wordlegame.model
 
 enum class GameStatus {
     NONE,

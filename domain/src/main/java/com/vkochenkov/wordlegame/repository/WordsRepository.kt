@@ -1,6 +1,6 @@
-package com.vkochenkov.wordlegame.domain
+package com.vkochenkov.wordlegame.repository
 
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.model.Language
 
 interface WordsRepository {
 

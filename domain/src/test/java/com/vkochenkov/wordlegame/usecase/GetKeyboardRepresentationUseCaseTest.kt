@@ -1,8 +1,8 @@
-package com.vkochenkov.wordlegame.domain.usecase
+package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.domain.WordsRepository
-import com.vkochenkov.wordlegame.domain.model.Cell
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.repository.WordsRepository
+import com.vkochenkov.wordlegame.model.Cell
+import com.vkochenkov.wordlegame.model.Language
 import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mockito

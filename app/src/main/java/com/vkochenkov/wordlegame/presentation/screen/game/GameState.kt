@@ -1,8 +1,8 @@
 package com.vkochenkov.wordlegame.presentation.screen.game
 
-import com.vkochenkov.wordlegame.domain.model.Language
-import com.vkochenkov.wordlegame.domain.model.Cell
-import com.vkochenkov.wordlegame.domain.model.GameStatus
+import com.vkochenkov.wordlegame.model.Language
+import com.vkochenkov.wordlegame.model.Cell
+import com.vkochenkov.wordlegame.model.GameStatus
 
 const val DEFAULT_NUMBER_OF_ROWS = 6
 const val DEFAULT_NUMBER_OF_LETTERS = 5

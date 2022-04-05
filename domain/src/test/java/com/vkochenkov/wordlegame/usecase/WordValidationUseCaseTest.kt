@@ -1,9 +1,9 @@
-package com.vkochenkov.wordlegame.domain.usecase
+package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.domain.WordsRepository
-import com.vkochenkov.wordlegame.domain.model.Cell
-import com.vkochenkov.wordlegame.domain.model.GameStatus
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.repository.WordsRepository
+import com.vkochenkov.wordlegame.model.Cell
+import com.vkochenkov.wordlegame.model.GameStatus
+import com.vkochenkov.wordlegame.model.Language
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Test
@@ -71,7 +71,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -104,7 +105,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -137,7 +139,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -171,7 +174,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -204,7 +208,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 5,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertTrue(error.toString(), false)
@@ -231,7 +236,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertEquals(expectedError, error)
@@ -258,7 +264,8 @@ class WordValidationUseCaseTest {
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
-            callback = object : ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                 override fun onError(error: WordValidationUseCase.ErrorType) {
                     assertEquals(expectedError, error)

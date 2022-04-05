@@ -1,7 +1,7 @@
-package com.vkochenkov.wordlegame.data
+package com.vkochenkov.wordlegame.repository
 
-import com.vkochenkov.wordlegame.domain.WordsRepository
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.local.Dao
+import com.vkochenkov.wordlegame.model.Language
 
 class WordsRepositoryImpl(
     private val dao: Dao

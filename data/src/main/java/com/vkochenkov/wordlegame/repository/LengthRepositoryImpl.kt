@@ -1,7 +1,6 @@
-package com.vkochenkov.wordlegame.sharedprefs
+package com.vkochenkov.wordlegame.repository
 
-import com.vkochenkov.wordlegame.domain.LengthRepository
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.sharedprefs.LengthSharedPrefs
 
 class LengthRepositoryImpl(
     private val sharedPrefs: LengthSharedPrefs

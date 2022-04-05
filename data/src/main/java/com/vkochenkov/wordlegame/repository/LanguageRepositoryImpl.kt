@@ -1,7 +1,7 @@
-package com.vkochenkov.wordlegame.sharedprefs
+package com.vkochenkov.wordlegame.repository
 
-import com.vkochenkov.wordlegame.domain.LanguageRepository
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.model.Language
+import com.vkochenkov.wordlegame.sharedprefs.LanguageSharedPrefs
 
 class LanguageRepositoryImpl(
     private val sharedPrefs: LanguageSharedPrefs

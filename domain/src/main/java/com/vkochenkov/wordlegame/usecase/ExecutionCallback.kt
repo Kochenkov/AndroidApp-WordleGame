@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.domain.usecase
+package com.vkochenkov.wordlegame.usecase
 
 interface ExecutionCallback<E, R> {
 

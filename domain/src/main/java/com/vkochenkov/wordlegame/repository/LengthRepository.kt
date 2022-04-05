@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.domain
+package com.vkochenkov.wordlegame.repository
 
 interface LengthRepository {
 

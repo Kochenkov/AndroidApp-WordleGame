@@ -1,7 +1,6 @@
 package com.vkochenkov.wordlegame.sharedprefs
 
 import android.content.Context
-import com.vkochenkov.wordlegame.domain.model.Language
 
 private const val LENGTH_SHARED_PREFS_STORAGE = "LENGTH_SHARED_PREFS_STORAGE"
 private const val CURRENT_LENGTH_KEY = "CURRENT_LENGTH_KEY"

@@ -2,14 +2,10 @@ package com.vkochenkov.wordlegame.presentation.screen.home
 
 import android.app.Activity
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.presentation.MainActivity
 import com.vkochenkov.wordlegame.presentation.NavigationRoute
-import com.vkochenkov.wordlegame.presentation.screen.game.GameState
 
 class HomeViewModel : ViewModel() {
 

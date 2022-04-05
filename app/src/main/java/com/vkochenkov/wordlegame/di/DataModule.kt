@@ -1,13 +1,13 @@
 package com.vkochenkov.wordlegame.di
 
-import com.vkochenkov.wordlegame.data.Dao
-import com.vkochenkov.wordlegame.data.WordsRepositoryImpl
-import com.vkochenkov.wordlegame.domain.LanguageRepository
-import com.vkochenkov.wordlegame.domain.LengthRepository
-import com.vkochenkov.wordlegame.domain.WordsRepository
-import com.vkochenkov.wordlegame.sharedprefs.LanguageRepositoryImpl
+import com.vkochenkov.wordlegame.local.Dao
+import com.vkochenkov.wordlegame.repository.WordsRepositoryImpl
+import com.vkochenkov.wordlegame.repository.LanguageRepository
+import com.vkochenkov.wordlegame.repository.LengthRepository
+import com.vkochenkov.wordlegame.repository.WordsRepository
+import com.vkochenkov.wordlegame.repository.LanguageRepositoryImpl
 import com.vkochenkov.wordlegame.sharedprefs.LanguageSharedPrefs
-import com.vkochenkov.wordlegame.sharedprefs.LengthRepositoryImpl
+import com.vkochenkov.wordlegame.repository.LengthRepositoryImpl
 import com.vkochenkov.wordlegame.sharedprefs.LengthSharedPrefs
 import org.koin.dsl.module
 

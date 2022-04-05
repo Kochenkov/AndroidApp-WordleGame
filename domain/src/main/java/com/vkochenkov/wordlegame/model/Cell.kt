@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.domain.model
+package com.vkochenkov.wordlegame.model
 
 data class Cell(
     val letter: Char? = null,

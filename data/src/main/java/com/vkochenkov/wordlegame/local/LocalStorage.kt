@@ -1,4 +1,4 @@
-package com.vkochenkov.wordlegame.data
+package com.vkochenkov.wordlegame.local
 
 const val DELETE_CHAR = '-'
 const val ENTER_CHAR = '='

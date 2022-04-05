@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.vkochenkov.wordlegame.R
-import com.vkochenkov.wordlegame.domain.model.GameStatus
+import com.vkochenkov.wordlegame.model.GameStatus
 import com.vkochenkov.wordlegame.presentation.MainActivity
 import org.koin.androidx.compose.getViewModel
 

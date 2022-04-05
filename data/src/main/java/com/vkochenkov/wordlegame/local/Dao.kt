@@ -1,6 +1,6 @@
-package com.vkochenkov.wordlegame.data
+package com.vkochenkov.wordlegame.local
 
-import com.vkochenkov.wordlegame.domain.model.Language
+import com.vkochenkov.wordlegame.model.Language
 import java.io.BufferedReader
 import java.io.FileReader
 
