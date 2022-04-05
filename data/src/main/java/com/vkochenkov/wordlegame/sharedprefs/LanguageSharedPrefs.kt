@@ -7,7 +7,7 @@ private const val LANG_SHARED_PREFS_STORAGE = "LANG_SHARED_PREFS_STORAGE"
 private const val CURRENT_LANG_KEY = "CURRENT_LANG_KEY"
 private val defaultLanguage = Language.RU
 
-class SharedPrefLanguageProvider(
+class LanguageSharedPrefs(
     private val context: Context
 ) {
     private val preferences =

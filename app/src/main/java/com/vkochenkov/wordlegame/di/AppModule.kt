@@ -12,7 +12,8 @@ val appModule = module {
             wordValidationUseCase = get(),
             getRandomWordUseCase = get(),
             getKeyboardRepresentationUseCase = get(),
-            languageRepository = get()
+            languageRepository = get(),
+            lengthRepository = get()
         )
     }
 

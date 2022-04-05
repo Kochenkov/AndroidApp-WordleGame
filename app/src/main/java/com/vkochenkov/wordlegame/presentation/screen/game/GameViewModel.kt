@@ -12,6 +12,7 @@ import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.data.DELETE_CHAR
 import com.vkochenkov.wordlegame.data.ENTER_CHAR
 import com.vkochenkov.wordlegame.domain.LanguageRepository
+import com.vkochenkov.wordlegame.domain.LengthRepository
 import com.vkochenkov.wordlegame.domain.model.Cell
 import com.vkochenkov.wordlegame.domain.model.GameStatus
 import com.vkochenkov.wordlegame.domain.model.Language
@@ -28,10 +29,12 @@ class GameViewModel(
     private val wordValidationUseCase: WordValidationUseCase,
     private val getRandomWordUseCase: GetRandomWordUseCase,
     private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase,
-    private val languageRepository: LanguageRepository
+    private val languageRepository: LanguageRepository,
+    private val lengthRepository: LengthRepository
 ) : ViewModel() {
 
     private val currentLang = languageRepository.getLanguage()
+    private val currentWordsLength = lengthRepository.getLength()
 
     private val mScreenState = MutableLiveData(getInitialState())
     val screenState: LiveData<GameState> = mScreenState
@@ -170,7 +173,8 @@ class GameViewModel(
         return GameState(
             language = currentLang,
             hiddenWord = getRandomWordUseCase.execute(currentLang, DEFAULT_NUMBER_OF_LETTERS),
-            keyboard = getKeyboardRepresentationUseCase.execute(currentLang)
+            keyboard = getKeyboardRepresentationUseCase.execute(currentLang),
+            numberOfLetters = currentWordsLength
         )
     }
 }
