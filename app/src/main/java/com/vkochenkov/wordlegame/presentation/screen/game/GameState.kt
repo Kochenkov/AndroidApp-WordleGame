@@ -1,6 +1,5 @@
 package com.vkochenkov.wordlegame.presentation.screen.game
 
-import com.vkochenkov.wordlegame.model.Language
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
 
@@ -17,7 +16,6 @@ data class GameState(
     val hiddenWord: List<Char>,
     val currentWord: List<Char> = emptyList(),
     val currentRow: Int = 0,
-    val gameStatus: GameStatus = GameStatus.PLAYING,
-    val language: Language
+    val gameStatus: GameStatus = GameStatus.PLAYING
 )
 

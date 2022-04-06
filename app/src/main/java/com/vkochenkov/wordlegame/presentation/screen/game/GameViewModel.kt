@@ -7,11 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.vkochenkov.wordlegame.LocalStorage.Companion.DELETE_CHAR
+import com.vkochenkov.wordlegame.LocalStorage.Companion.ENTER_CHAR
 import com.vkochenkov.wordlegame.R
-import com.vkochenkov.wordlegame.local.DELETE_CHAR
-import com.vkochenkov.wordlegame.local.ENTER_CHAR
-import com.vkochenkov.wordlegame.repository.LanguageRepository
-import com.vkochenkov.wordlegame.repository.LengthRepository
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
 import com.vkochenkov.wordlegame.usecase.WordValidationUseCase
@@ -27,12 +25,7 @@ class GameViewModel(
     private val wordValidationUseCase: WordValidationUseCase,
     private val getRandomWordUseCase: GetRandomWordUseCase,
     private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase,
-    private val languageRepository: LanguageRepository,
-    private val lengthRepository: LengthRepository
 ) : ViewModel() {
-
-    private val currentLang = languageRepository.getLanguage()
-    private val currentWordsLength = lengthRepository.getLength()
 
     private val mScreenState = MutableLiveData(getInitialState())
     val screenState: LiveData<GameState> = mScreenState
@@ -129,7 +122,6 @@ class GameViewModel(
         mScreenState.value?.let { state ->
             viewModelScope.launch(Dispatchers.IO) {
                 wordValidationUseCase.execute(
-                    state.language,
                     state.numberOfLetters,
                     state.numberOfRows,
                     state.hiddenWord,
@@ -169,10 +161,8 @@ class GameViewModel(
 
     private fun getInitialState(): GameState {
         return GameState(
-            language = currentLang,
-            hiddenWord = getRandomWordUseCase.execute(currentLang, DEFAULT_NUMBER_OF_LETTERS),
-            keyboard = getKeyboardRepresentationUseCase.execute(currentLang),
-            numberOfLetters = currentWordsLength
+            hiddenWord = getRandomWordUseCase.execute(),
+            keyboard = getKeyboardRepresentationUseCase.execute(),
         )
     }
 }

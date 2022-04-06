@@ -7,17 +7,15 @@ import org.koin.dsl.module
 
 val appModule = module {
     
-    viewModel<GameViewModel> {
+    viewModel {
         GameViewModel(
             wordValidationUseCase = get(),
             getRandomWordUseCase = get(),
-            getKeyboardRepresentationUseCase = get(),
-            languageRepository = get(),
-            lengthRepository = get()
+            getKeyboardRepresentationUseCase = get()
         )
     }
 
-    viewModel<HomeViewModel> {
+    viewModel {
         HomeViewModel()
     }
 }

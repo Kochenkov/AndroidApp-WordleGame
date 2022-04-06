@@ -1,6 +1,6 @@
 package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.repository.WordsRepository
+import com.vkochenkov.wordlegame.WordsRepository
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.Language
 import org.junit.Assert.*
@@ -11,18 +11,17 @@ class GetKeyboardRepresentationUseCaseTest {
 
     private val repository = Mockito.mock(WordsRepository::class.java)
     private val useCase = GetKeyboardRepresentationUseCase(repository)
-    private val lang = Language.RU
 
     @Test
     fun `should return list of cells after get chars list`() {
-        Mockito.`when`(repository.getKeyboard(lang)).thenReturn(
+        Mockito.`when`(repository.getKeyboard()).thenReturn(
             listOf(
                 listOf('1','2'),
                 listOf('3','4')
             )
         )
 
-        val actual = useCase.execute(lang)
+        val actual = useCase.execute()
         val expected = listOf(
             listOf(Cell('1', Cell.Status.DEFAULT), Cell('2', Cell.Status.DEFAULT)),
             listOf(Cell('3', Cell.Status.DEFAULT), Cell('4', Cell.Status.DEFAULT))

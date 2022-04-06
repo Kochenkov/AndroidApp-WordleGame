@@ -1,6 +1,6 @@
 package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.repository.WordsRepository
+import com.vkochenkov.wordlegame.WordsRepository
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
 import com.vkochenkov.wordlegame.model.Language
@@ -14,7 +14,6 @@ class WordValidationUseCaseTest {
 
     private val repository = mock(WordsRepository::class.java)
     private val useCase = WordValidationUseCase(repository)
-    private val lang = Language.RU
 
     @Test
     fun `total coincidence - victory`() {
@@ -28,10 +27,9 @@ class WordValidationUseCaseTest {
                 Cell('d', Cell.Status.RIGHT)
             ), GameStatus.VICTORY
         )
-        `when`(repository.isWordPresent(lang, "word")).thenReturn(true)
+        `when`(repository.isWordPresent("word")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 2,
             hiddenWord = hiddenWord,
@@ -62,10 +60,9 @@ class WordValidationUseCaseTest {
                 Cell('r', Cell.Status.PRESENT)
             ), GameStatus.PLAYING
         )
-        `when`(repository.isWordPresent(lang, "coar")).thenReturn(true)
+        `when`(repository.isWordPresent("coar")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 3,
             hiddenWord = hiddenWord,
@@ -96,10 +93,9 @@ class WordValidationUseCaseTest {
                 Cell('c', Cell.Status.PRESENT)
             ), GameStatus.PLAYING
         )
-        `when`(repository.isWordPresent(lang, "anac")).thenReturn(true)
+        `when`(repository.isWordPresent("anac")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 3,
             hiddenWord = hiddenWord,
@@ -130,10 +126,9 @@ class WordValidationUseCaseTest {
                 Cell('c', Cell.Status.PRESENT)
             ), GameStatus.PLAYING
         )
-        `when`(repository.isWordPresent(lang, "anac")).thenReturn(true)
+        `when`(repository.isWordPresent("anac")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 3,
             hiddenWord = hiddenWord,
@@ -165,10 +160,9 @@ class WordValidationUseCaseTest {
                 Cell('р', Cell.Status.WRONG)
             ), GameStatus.PLAYING
         )
-        `when`(repository.isWordPresent(lang, "аграр")).thenReturn(true)
+        `when`(repository.isWordPresent("аграр")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 5,
             numberOfRows = 3,
             hiddenWord = hiddenWord,
@@ -199,10 +193,9 @@ class WordValidationUseCaseTest {
                 Cell('r', Cell.Status.PRESENT)
             ), GameStatus.LOSE
         )
-        `when`(repository.isWordPresent(lang, "coar")).thenReturn(true)
+        `when`(repository.isWordPresent("coar")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 6,
             hiddenWord = hiddenWord,
@@ -227,10 +220,9 @@ class WordValidationUseCaseTest {
         val word = listOf('c', 'o', 'a')
         val expectedError = WordValidationUseCase.ErrorType.NOT_FULL_LINE
 
-        `when`(repository.isWordPresent(lang, "coa")).thenReturn(true)
+        `when`(repository.isWordPresent("coa")).thenReturn(true)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 2,
             hiddenWord = hiddenWord,
@@ -255,10 +247,9 @@ class WordValidationUseCaseTest {
         val word = listOf('g', 'o', 'a', 'l')
         val expectedError = WordValidationUseCase.ErrorType.DOES_NOT_IN_DB
 
-        `when`(repository.isWordPresent(lang, "goal")).thenReturn(false)
+        `when`(repository.isWordPresent("goal")).thenReturn(false)
 
         useCase.execute(
-            lang = lang,
             numberOfLetters = 4,
             numberOfRows = 1,
             hiddenWord = hiddenWord,

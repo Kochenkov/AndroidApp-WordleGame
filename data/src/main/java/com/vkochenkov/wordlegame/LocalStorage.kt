@@ -1,13 +1,14 @@
-package com.vkochenkov.wordlegame.local
+package com.vkochenkov.wordlegame
 
-const val DELETE_CHAR = '-'
-const val ENTER_CHAR = '='
+class LocalStorage {
 
-object LocalStorage {
+    companion object {
+        const val DELETE_CHAR = '-'
+        const val ENTER_CHAR = '='
+    }
 
-    val cashedWordsList: List<String>? = null
     //todo delete
-    val wordsList: List<String> = listOf("книга", "полка", "майка", "птица", "ларек", "аграр")
+   // val wordsList: List<String> = listOf("книга", "полка", "майка", "птица", "ларек", "аграр")
 
     val ruKeyboardRepresentation: List<List<Char>> = listOf(
         listOf('й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'),
