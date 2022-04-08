@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.vkochenkov.wordlegame.LocalStorage.Companion.DELETE_CHAR
-import com.vkochenkov.wordlegame.LocalStorage.Companion.ENTER_CHAR
+import com.vkochenkov.wordlegame.KeyboardsStorage.Companion.DELETE_CHAR
+import com.vkochenkov.wordlegame.KeyboardsStorage.Companion.ENTER_CHAR
 import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus

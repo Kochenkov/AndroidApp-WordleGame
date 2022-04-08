@@ -7,9 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.vkochenkov.wordlegame.LocalStorage.Companion.DELETE_CHAR
-import com.vkochenkov.wordlegame.LocalStorage.Companion.ENTER_CHAR
+import com.vkochenkov.wordlegame.KeyboardsStorage.Companion.DELETE_CHAR
+import com.vkochenkov.wordlegame.KeyboardsStorage.Companion.ENTER_CHAR
 import com.vkochenkov.wordlegame.R
+import com.vkochenkov.wordlegame.Repository
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
 import com.vkochenkov.wordlegame.usecase.WordValidationUseCase
@@ -25,6 +26,7 @@ class GameViewModel(
     private val wordValidationUseCase: WordValidationUseCase,
     private val getRandomWordUseCase: GetRandomWordUseCase,
     private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase,
+    private val repository: Repository
 ) : ViewModel() {
 
     private val mScreenState = MutableLiveData(getInitialState())
@@ -163,6 +165,7 @@ class GameViewModel(
         return GameState(
             hiddenWord = getRandomWordUseCase.execute(),
             keyboard = getKeyboardRepresentationUseCase.execute(),
+            numberOfLetters = repository.getLength()
         )
     }
 }

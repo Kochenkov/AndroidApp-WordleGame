@@ -1,15 +1,14 @@
 package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.WordsRepository
+import com.vkochenkov.wordlegame.Repository
 import com.vkochenkov.wordlegame.model.Cell
-import com.vkochenkov.wordlegame.model.Language
 import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mockito
 
 class GetKeyboardRepresentationUseCaseTest {
 
-    private val repository = Mockito.mock(WordsRepository::class.java)
+    private val repository = Mockito.mock(Repository::class.java)
     private val useCase = GetKeyboardRepresentationUseCase(repository)
 
     @Test

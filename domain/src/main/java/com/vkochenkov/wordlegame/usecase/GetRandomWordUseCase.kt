@@ -1,13 +1,13 @@
 package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.WordsRepository
+import com.vkochenkov.wordlegame.Repository
 
 class GetRandomWordUseCase(
-    private val wordsRepository: WordsRepository
+    private val repository: Repository
 ) {
 
     fun execute(): List<Char> {
-        val stringWord = wordsRepository.getRandomWord()
+        val stringWord = repository.getRandomWord()
         return stringWord.toList()
     }
 }

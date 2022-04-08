@@ -1,7 +1,6 @@
 package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.WordsRepository
-import com.vkochenkov.wordlegame.model.Language
+import com.vkochenkov.wordlegame.Repository
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -9,7 +8,7 @@ import org.mockito.Mockito
 
 class GetRandomWordUseCaseTest {
 
-    private val repository = Mockito.mock(WordsRepository::class.java)
+    private val repository = Mockito.mock(Repository::class.java)
     private val useCase = GetRandomWordUseCase(repository)
 
     @Test

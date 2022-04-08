@@ -5,7 +5,7 @@ import com.vkochenkov.wordlegame.model.Language
 
 private const val LANG_SHARED_PREFS_STORAGE = "LANG_SHARED_PREFS_STORAGE"
 private const val CURRENT_LANG_KEY = "CURRENT_LANG_KEY"
-private val defaultLanguage = Language.RU
+private val defaultLanguage = Language.EN
 
 class LanguageSharedPrefs(
     private val context: Context

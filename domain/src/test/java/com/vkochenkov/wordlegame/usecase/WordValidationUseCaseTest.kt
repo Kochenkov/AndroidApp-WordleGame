@@ -1,9 +1,8 @@
 package com.vkochenkov.wordlegame.usecase
 
-import com.vkochenkov.wordlegame.WordsRepository
+import com.vkochenkov.wordlegame.Repository
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
-import com.vkochenkov.wordlegame.model.Language
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Test
@@ -12,7 +11,7 @@ import org.mockito.Mockito.mock
 
 class WordValidationUseCaseTest {
 
-    private val repository = mock(WordsRepository::class.java)
+    private val repository = mock(Repository::class.java)
     private val useCase = WordValidationUseCase(repository)
 
     @Test

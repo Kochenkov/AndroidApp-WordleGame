@@ -1,9 +1,8 @@
 package com.vkochenkov.wordlegame.di
 
-import com.vkochenkov.wordlegame.Dao
-import com.vkochenkov.wordlegame.LocalStorage
-import com.vkochenkov.wordlegame.WordsRepositoryImpl
-import com.vkochenkov.wordlegame.WordsRepository
+import com.vkochenkov.wordlegame.KeyboardsStorage
+import com.vkochenkov.wordlegame.RepositoryImpl
+import com.vkochenkov.wordlegame.Repository
 import com.vkochenkov.wordlegame.sharedprefs.LanguageSharedPrefs
 import com.vkochenkov.wordlegame.sharedprefs.LengthSharedPrefs
 import org.koin.dsl.module
@@ -11,26 +10,18 @@ import org.koin.dsl.module
 val dataModule = module {
 
     single {
-        Dao()
-    }
-    single {
-        LocalStorage()
+        KeyboardsStorage()
     }
 
     single {
-        LanguageSharedPrefs(context = get())
+        LanguageSharedPrefs(get())
     }
 
     single {
-        LengthSharedPrefs(context = get())
+        LengthSharedPrefs(get())
     }
 
-    factory<WordsRepository> {
-        WordsRepositoryImpl(
-            lengthSharedPrefs = get(),
-            languageSharedPrefs = get(),
-            storage = get(),
-            dao = get()
-        )
+    factory<Repository> {
+        RepositoryImpl(get(), get(), get(), get())
     }
 }
