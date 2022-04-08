@@ -13,19 +13,16 @@ import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.Repository
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
-import com.vkochenkov.wordlegame.usecase.WordValidationUseCase
-import com.vkochenkov.wordlegame.usecase.GetKeyboardRepresentationUseCase
-import com.vkochenkov.wordlegame.usecase.GetRandomWordUseCase
-import com.vkochenkov.wordlegame.usecase.ExecutionCallback
 import com.vkochenkov.wordlegame.presentation.MainActivity
 import com.vkochenkov.wordlegame.presentation.NavigationRoute
+import com.vkochenkov.wordlegame.usecase.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GameViewModel(
     private val wordValidationUseCase: WordValidationUseCase,
-    private val getRandomWordUseCase: GetRandomWordUseCase,
-    private val getKeyboardRepresentationUseCase: GetKeyboardRepresentationUseCase,
+    private val addLetterUseCase: AddLetterUseCase,
+    private val deleteLetterUseCase: DeleteLetterUseCase,
     private val repository: Repository
 ) : ViewModel() {
 
@@ -78,45 +75,40 @@ class GameViewModel(
 
     private fun deleteLetter() {
         mScreenState.value?.let { state ->
-            if (state.currentWord.isNotEmpty()) {
-                val newWord = state.currentWord.toMutableList()
-                newWord.removeAt(newWord.size - 1)
-                val newBoard = state.board
-                for (i in newBoard.indices) {
-                    if (i == state.currentRow) {
-                        newBoard[i][state.currentWord.size - 1] = Cell(null)
-                        break
+            deleteLetterUseCase.execute(
+                board = state.board,
+                currentWord = state.currentWord,
+                currentRow = state.currentRow,
+                callback = object : ResultCallback<DeleteLetterUseCase.Result> {
+                    override fun onResult(result: DeleteLetterUseCase.Result) {
+                        val newState = state.copy(
+                            currentWord = result.word,
+                            board = result.bord
+                        )
+                        mScreenState.postValue(newState)
                     }
                 }
-                val newState = state.copy(
-                    currentWord = newWord,
-                    board = newBoard
-                )
-                mScreenState.postValue(newState)
-            }
+            )
         }
     }
 
     private fun addLetter(char: Char) {
         mScreenState.value?.let { state ->
-            if (state.currentWord.size < state.numberOfLetters) {
-
-                val newWord = state.currentWord.toMutableList()
-                newWord.add(char)
-
-                val newBoard = state.board
-                for (i in newBoard.indices) {
-                    if (i == state.currentRow) {
-                        newBoard[i][newWord.size - 1] = Cell(char)
-                        break
+            addLetterUseCase.execute(
+                char = char,
+                board = state.board,
+                currentWord = state.currentWord,
+                currentRow = state.currentRow,
+                callback = object : ResultCallback<AddLetterUseCase.Result> {
+                    override fun onResult(result: AddLetterUseCase.Result) {
+                        val newState = state.copy(
+                            currentWord = result.word,
+                            board = result.bord
+                        )
+                        mScreenState.postValue(newState)
                     }
                 }
-                val newState = state.copy(
-                    currentWord = newWord,
-                    board = newBoard
-                )
-                mScreenState.postValue(newState)
-            }
+            )
         }
     }
 
@@ -124,8 +116,6 @@ class GameViewModel(
         mScreenState.value?.let { state ->
             viewModelScope.launch(Dispatchers.IO) {
                 wordValidationUseCase.execute(
-                    state.numberOfLetters,
-                    state.numberOfRows,
                     state.hiddenWord,
                     state.currentWord,
                     state.currentRow,
@@ -135,8 +125,12 @@ class GameViewModel(
                         override fun onError(error: WordValidationUseCase.ErrorType) {
                             viewModelScope.launch(Dispatchers.Main) {
                                 val errorName = when (error) {
-                                    WordValidationUseCase.ErrorType.NOT_FULL_LINE -> context.getString(R.string.error_length)
-                                    WordValidationUseCase.ErrorType.DOES_NOT_IN_DB -> context.getString(R.string.error_db)
+                                    WordValidationUseCase.ErrorType.NOT_FULL_LINE -> context.getString(
+                                        R.string.error_length
+                                    )
+                                    WordValidationUseCase.ErrorType.DOES_NOT_IN_DB -> context.getString(
+                                        R.string.error_db
+                                    )
                                 }
                                 Toast.makeText(context, errorName, Toast.LENGTH_SHORT).show()
                             }
@@ -163,9 +157,15 @@ class GameViewModel(
 
     private fun getInitialState(): GameState {
         return GameState(
-            hiddenWord = getRandomWordUseCase.execute(),
-            keyboard = getKeyboardRepresentationUseCase.execute(),
-            numberOfLetters = repository.getLength()
+            hiddenWord = repository.getRandomWord(),
+            keyboard = repository.getKeyboard(),
+            board = createBoard()
         )
+    }
+
+    private fun createBoard(): Array<Array<Cell>> {
+        val numberOfLetters = repository.getLength()
+        val numberOfRows = repository.getRows()
+        return Array(numberOfRows) { Array(numberOfLetters) { Cell() } }
     }
 }

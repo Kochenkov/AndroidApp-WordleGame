@@ -6,3 +6,8 @@ interface ExecutionCallback<E, R> {
 
     fun onSuccess(result: R)
 }
+
+interface ResultCallback<R> {
+
+    fun onResult(result: R)
+}

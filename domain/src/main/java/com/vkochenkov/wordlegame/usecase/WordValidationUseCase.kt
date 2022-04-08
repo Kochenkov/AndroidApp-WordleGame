@@ -9,13 +9,14 @@ class WordValidationUseCase(
 ) {
 
     fun execute(
-        numberOfLetters: Int,
-        numberOfRows: Int,
         hiddenWord: List<Char>,
         currentWord: List<Char>,
         currentRow: Int,
         callback: ExecutionCallback<ErrorType, Result>
     ) {
+
+        val numberOfLetters = repository.getLength()
+        val numberOfRows = repository.getRows()
 
         if (numberOfLetters != currentWord.size) {
             callback.onError(ErrorType.NOT_FULL_LINE)

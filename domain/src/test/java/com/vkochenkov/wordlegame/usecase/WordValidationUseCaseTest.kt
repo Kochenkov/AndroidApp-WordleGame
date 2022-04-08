@@ -27,10 +27,10 @@ class WordValidationUseCaseTest {
             ), GameStatus.VICTORY
         )
         `when`(repository.isWordPresent("word")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(2)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 2,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -60,10 +60,10 @@ class WordValidationUseCaseTest {
             ), GameStatus.PLAYING
         )
         `when`(repository.isWordPresent("coar")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(3)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -93,10 +93,10 @@ class WordValidationUseCaseTest {
             ), GameStatus.PLAYING
         )
         `when`(repository.isWordPresent("anac")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(3)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -126,10 +126,10 @@ class WordValidationUseCaseTest {
             ), GameStatus.PLAYING
         )
         `when`(repository.isWordPresent("anac")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(3)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -160,10 +160,10 @@ class WordValidationUseCaseTest {
             ), GameStatus.PLAYING
         )
         `when`(repository.isWordPresent("аграр")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(5)
+        `when`(repository.getRows()).thenReturn(3)
 
         useCase.execute(
-            numberOfLetters = 5,
-            numberOfRows = 3,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -193,10 +193,10 @@ class WordValidationUseCaseTest {
             ), GameStatus.LOSE
         )
         `when`(repository.isWordPresent("coar")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(6)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 6,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 5,
@@ -220,10 +220,10 @@ class WordValidationUseCaseTest {
         val expectedError = WordValidationUseCase.ErrorType.NOT_FULL_LINE
 
         `when`(repository.isWordPresent("coa")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(2)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 2,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,
@@ -247,10 +247,10 @@ class WordValidationUseCaseTest {
         val expectedError = WordValidationUseCase.ErrorType.DOES_NOT_IN_DB
 
         `when`(repository.isWordPresent("goal")).thenReturn(false)
+        `when`(repository.getLength()).thenReturn(4)
+        `when`(repository.getRows()).thenReturn(1)
 
         useCase.execute(
-            numberOfLetters = 4,
-            numberOfRows = 1,
             hiddenWord = hiddenWord,
             currentWord = word,
             currentRow = 1,

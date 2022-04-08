@@ -1,16 +1,19 @@
 package com.vkochenkov.wordlegame
 
 import android.content.Context
+import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.Language
 import com.vkochenkov.wordlegame.sharedprefs.LanguageSharedPrefs
 import com.vkochenkov.wordlegame.sharedprefs.LengthSharedPrefs
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
+private const val DEFAULT_NUMBER_OF_ROWS = 6
+
 class RepositoryImpl(
     private val lengthSharedPrefs: LengthSharedPrefs,
     private val languageSharedPrefs: LanguageSharedPrefs,
-    private val storage: KeyboardsStorage,
+    private val keyboardStorage: KeyboardsStorage,
     private val context: Context
 ) : Repository {
 
@@ -24,19 +27,28 @@ class RepositoryImpl(
         return false
     }
 
-    override fun getRandomWord(): String {
-        return getWordsList().random()
+    override fun getRandomWord(): List<Char> {
+        return getWordsList().random().toList()
     }
 
-    override fun getKeyboard(): List<List<Char>> {
-        return when (languageSharedPrefs.getLanguage()) {
-            Language.RU -> storage.getRuKeyboard
-            Language.EN -> storage.getEnKeyboard
+    override fun getKeyboard(): List<List<Cell>> {
+        val keyboard = when (languageSharedPrefs.getLanguage()) {
+            Language.RU -> keyboardStorage.getRuKeyboard
+            Language.EN -> keyboardStorage.getEnKeyboard
+        }
+        return keyboard.map { list ->
+            list.map { char ->
+                Cell(char)
+            }
         }
     }
 
     override fun getLength(): Int {
         return lengthSharedPrefs.getLength()
+    }
+
+    override fun getRows(): Int {
+        return DEFAULT_NUMBER_OF_ROWS
     }
 
     private fun getFileLocation(): String {
