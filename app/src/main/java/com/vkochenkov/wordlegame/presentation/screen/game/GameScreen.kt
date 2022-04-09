@@ -132,7 +132,16 @@ private fun KeyboardButton(
             .padding(horizontal = 1.dp, vertical = 2.dp),
         onClick = {
             viewModel.onKeyPressed(context, cell)
-        }
+        },
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = when (cell.status) {
+                Cell.Status.PRESENT -> Yellow
+                Cell.Status.WRONG -> Gray
+                Cell.Status.RIGHT -> Green
+                Cell.Status.DEFAULT -> Whiter
+                Cell.Status.PREFILL -> Whiter
+            }
+        )
     ) {
         if (cell.letter != null) {
             when (cell.letter) {

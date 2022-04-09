@@ -144,7 +144,8 @@ class GameViewModel(
                                 board = newBoard,
                                 currentRow = state.currentRow + 1,
                                 currentWord = listOf(),
-                                gameStatus = result.gameStatus
+                                gameStatus = result.gameStatus,
+                                keyboard = updateKeyboard(newBoard)
                             )
                             mScreenState.postValue(newState)
                         }
@@ -153,6 +154,49 @@ class GameViewModel(
             }
         }
     }
+
+    private fun updateKeyboard(board: Array<Array<Cell>>): List<List<Cell>> {
+        val keyboardsStatusMap = HashMap<Char, Cell.Status>()
+        loop@ for (row in board) {
+            for (cell in row) {
+                if (cell.letter != null) {
+                    val existsStatus = keyboardsStatusMap.get(cell.letter)
+                    if (existsStatus != null) {
+                        when (cell.status) {
+                            Cell.Status.RIGHT -> {
+                                keyboardsStatusMap.put(cell.letter!!, cell.status)
+                            }
+                            Cell.Status.PRESENT -> {
+                                if (existsStatus != Cell.Status.RIGHT) {
+                                    keyboardsStatusMap.put(cell.letter!!, cell.status)
+                                }
+                            }
+                            Cell.Status.WRONG -> {
+                                if (existsStatus != Cell.Status.RIGHT && existsStatus != Cell.Status.PRESENT) {
+                                    keyboardsStatusMap.put(cell.letter!!, cell.status)
+                                }
+                            }
+                        }
+                    } else {
+                        keyboardsStatusMap.put(cell.letter!!, cell.status)
+                    }
+                } else {
+                    break@loop
+                }
+            }
+        }
+        return mScreenState.value!!.keyboard.map { list ->
+            list.map { cell ->
+                val status = keyboardsStatusMap.get(cell.letter)
+                if (status != null) {
+                    Cell(cell.letter, status)
+                } else {
+                    cell
+                }
+            }
+        }
+    }
+
 
     private fun getInitialState(): GameState {
         return GameState(
