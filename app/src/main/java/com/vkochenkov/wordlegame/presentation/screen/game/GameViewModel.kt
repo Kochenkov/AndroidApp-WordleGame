@@ -197,7 +197,6 @@ class GameViewModel(
         }
     }
 
-
     private fun getInitialState(): GameState {
         return GameState(
             hiddenWord = repository.getRandomWord(),

@@ -181,6 +181,40 @@ class WordValidationUseCaseTest {
     }
 
     @Test
+    fun `partial coincidence test 5`() {
+        val hiddenWord = listOf('p', 'a', 'p', 'e', 'r')
+        val word = listOf('m', 'e', 't', 'e', 'r')
+        val expectedResult = WordValidationUseCase.Result(
+            listOf(
+                Cell('m', Cell.Status.WRONG),
+                Cell('e', Cell.Status.WRONG),
+                Cell('t', Cell.Status.WRONG),
+                Cell('e', Cell.Status.RIGHT),
+                Cell('r', Cell.Status.RIGHT)
+            ), GameStatus.PLAYING
+        )
+        `when`(repository.isWordPresent("meter")).thenReturn(true)
+        `when`(repository.getLength()).thenReturn(5)
+        `when`(repository.getRows()).thenReturn(3)
+
+        useCase.execute(
+            hiddenWord = hiddenWord,
+            currentWord = word,
+            currentRow = 1,
+            callback = object :
+                ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
+
+                override fun onError(error: WordValidationUseCase.ErrorType) {
+                    assertTrue(error.toString(), false)
+                }
+
+                override fun onSuccess(result: WordValidationUseCase.Result) {
+                    assertEquals(expectedResult, result)
+                }
+            })
+    }
+
+    @Test
     fun `lose game`() {
         val hiddenWord = listOf('w', 'o', 'r', 'd')
         val word = listOf('c', 'o', 'a', 'r')
