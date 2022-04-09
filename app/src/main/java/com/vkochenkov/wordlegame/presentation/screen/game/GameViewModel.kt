@@ -30,7 +30,7 @@ class GameViewModel(
     val screenState: LiveData<GameState> = mScreenState
 
     fun onNewGame() {
-        mScreenState.postValue(getInitialState())
+        mScreenState.value = getInitialState()
     }
 
     fun onKeyPressed(context: Context, cell: Cell) {
@@ -49,7 +49,7 @@ class GameViewModel(
                 gameStatus = GameStatus.PAUSE
             )
             MainActivity.lastGameState = newState
-            mScreenState.postValue(newState)
+            mScreenState.value = newState
         }
         navController.navigate(NavigationRoute.HOME.name) {
             launchSingleTop = true
@@ -69,7 +69,7 @@ class GameViewModel(
                 )
             }
             MainActivity.lastGameState = null
-            mScreenState.postValue(newState)
+            mScreenState.value = newState
         }
     }
 
@@ -85,7 +85,7 @@ class GameViewModel(
                             currentWord = result,
                             board = newBoard
                         )
-                        mScreenState.postValue(newState)
+                        mScreenState.value = newState
                     }
                 }
             )
@@ -100,12 +100,13 @@ class GameViewModel(
                 callback = object : ResultCallback<List<Char>> {
                     override fun onResult(result: List<Char>) {
                         val newBoard = state.board
-                        newBoard[state.currentRow][result.size-1] = Cell(result[result.lastIndex], Cell.Status.PREFILL)
+                        newBoard[state.currentRow][result.size - 1] =
+                            Cell(result[result.lastIndex], Cell.Status.PREFILL)
                         val newState = state.copy(
                             currentWord = result,
                             board = newBoard
                         )
-                        mScreenState.postValue(newState)
+                        mScreenState.value = newState
                     }
                 }
             )
@@ -123,31 +124,29 @@ class GameViewModel(
                         ExecutionCallback<WordValidationUseCase.ErrorType, WordValidationUseCase.Result> {
 
                         override fun onError(error: WordValidationUseCase.ErrorType) {
+                            val errorName = when (error) {
+                                WordValidationUseCase.ErrorType.NOT_FULL_LINE -> context.getString(
+                                    R.string.error_length
+                                )
+                                WordValidationUseCase.ErrorType.DOES_NOT_IN_DB -> context.getString(
+                                    R.string.error_db
+                                )
+                            }
                             viewModelScope.launch(Dispatchers.Main) {
-                                val errorName = when (error) {
-                                    WordValidationUseCase.ErrorType.NOT_FULL_LINE -> context.getString(
-                                        R.string.error_length
-                                    )
-                                    WordValidationUseCase.ErrorType.DOES_NOT_IN_DB -> context.getString(
-                                        R.string.error_db
-                                    )
-                                }
                                 Toast.makeText(context, errorName, Toast.LENGTH_SHORT).show()
                             }
                         }
 
                         override fun onSuccess(result: WordValidationUseCase.Result) {
-                            viewModelScope.launch(Dispatchers.Main) {
-                                val newBoard = state.board
-                                newBoard[state.currentRow] = result.word.toTypedArray()
-                                val newState = state.copy(
-                                    board = newBoard,
-                                    currentRow = state.currentRow + 1,
-                                    currentWord = listOf(),
-                                    gameStatus = result.gameStatus
-                                )
-                                mScreenState.postValue(newState)
-                            }
+                            val newBoard = state.board
+                            newBoard[state.currentRow] = result.word.toTypedArray()
+                            val newState = state.copy(
+                                board = newBoard,
+                                currentRow = state.currentRow + 1,
+                                currentWord = listOf(),
+                                gameStatus = result.gameStatus
+                            )
+                            mScreenState.postValue(newState)
                         }
                     }
                 )
