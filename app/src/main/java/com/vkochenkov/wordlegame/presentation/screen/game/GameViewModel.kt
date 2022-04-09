@@ -76,14 +76,14 @@ class GameViewModel(
     private fun deleteLetter() {
         mScreenState.value?.let { state ->
             deleteLetterUseCase.execute(
-                board = state.board,
                 currentWord = state.currentWord,
-                currentRow = state.currentRow,
-                callback = object : ResultCallback<DeleteLetterUseCase.Result> {
-                    override fun onResult(result: DeleteLetterUseCase.Result) {
+                callback = object : ResultCallback<List<Char>> {
+                    override fun onResult(result: List<Char>) {
+                        val newBoard = state.board
+                        newBoard[state.currentRow][result.size] = Cell(null, Cell.Status.DEFAULT)
                         val newState = state.copy(
-                            currentWord = result.word,
-                            board = result.bord
+                            currentWord = result,
+                            board = newBoard
                         )
                         mScreenState.postValue(newState)
                     }
@@ -96,14 +96,14 @@ class GameViewModel(
         mScreenState.value?.let { state ->
             addLetterUseCase.execute(
                 char = char,
-                board = state.board,
                 currentWord = state.currentWord,
-                currentRow = state.currentRow,
-                callback = object : ResultCallback<AddLetterUseCase.Result> {
-                    override fun onResult(result: AddLetterUseCase.Result) {
+                callback = object : ResultCallback<List<Char>> {
+                    override fun onResult(result: List<Char>) {
+                        val newBoard = state.board
+                        newBoard[state.currentRow][result.size-1] = Cell(result[result.lastIndex], Cell.Status.PREFILL)
                         val newState = state.copy(
-                            currentWord = result.word,
-                            board = result.bord
+                            currentWord = result,
+                            board = newBoard
                         )
                         mScreenState.postValue(newState)
                     }

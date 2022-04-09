@@ -9,35 +9,15 @@ class AddLetterUseCase(
 
     fun execute(
         char: Char,
-        board: Array<Array<Cell>>,
         currentWord: List<Char>,
-        currentRow: Int,
-        callback: ResultCallback<Result>
+        callback: ResultCallback<List<Char>>
     ) {
             if (currentWord.size < repository.getLength()) {
 
                 val newWord = currentWord.toMutableList()
                 newWord.add(char)
 
-                val newBoard = board.clone()
-                for (i in newBoard.indices) {
-                    if (i == currentRow) {
-                        newBoard[i][newWord.size - 1] = Cell(char)
-                        break
-                    }
-                }
-
-                callback.onResult(
-                    Result(
-                        bord = newBoard,
-                        word = newWord
-                    )
-                )
+                callback.onResult(newWord)
             }
     }
-
-    data class Result(
-        val bord: Array<Array<Cell>>,
-        val word: List<Char>
-    )
 }
