@@ -1,44 +1,64 @@
 package com.vkochenkov.wordlegame.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+data class WordleColors(
+    val background: Color,
+    val emptyCell: Color,
+    val wrongCell: Color,
+    val button: Color,
+    val content: Color
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+object WordleTheme {
+    val colors: WordleColors
+        @Composable
+        get() = LocalWordleColors.current
+}
 
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+val LocalWordleColors = staticCompositionLocalOf<WordleColors> {
+    error("No colors provided")
+}
+
+private val DarkColorPalette = WordleColors(
+    background = Dark,
+    emptyCell = LightDark,
+    wrongCell = DarkerGray,
+    button = DarkGray,
+    content = White
 )
+
+private val LightColorPalette = WordleColors(
+    background = White,
+    emptyCell = DarkWhite,
+    wrongCell = Gray,
+    button = LightGray,
+    content = Dark
+)
+
+/* Other default colors to override
+background = Color.White,
+surface = Color.White,
+onPrimary = Color.White,
+onSecondary = Color.Black,
+onBackground = Color.Black,
+onSurface = Color.Black,
+*/
 
 @Composable
-fun WordleGameTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun WordleTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+    CompositionLocalProvider(
+        LocalWordleColors provides colors,
         content = content
     )
 }

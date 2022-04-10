@@ -1,5 +1,6 @@
 package com.vkochenkov.wordlegame.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -11,15 +12,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.vkochenkov.wordlegame.presentation.screen.game.GameScreen
 import com.vkochenkov.wordlegame.presentation.screen.home.HomeScreen
-import com.vkochenkov.wordlegame.presentation.theme.WordleGameTheme
+import com.vkochenkov.wordlegame.presentation.theme.WordleTheme
 
 @Composable
 fun AppContent() {
 
     val navController = rememberNavController()
 
-    WordleGameTheme {
-        Surface(color = MaterialTheme.colors.background) {
+    WordleTheme {
+        Surface(color = WordleTheme.colors.background) {
             Scaffold { paddingValues ->
                 NavHost(
                     navController = navController,

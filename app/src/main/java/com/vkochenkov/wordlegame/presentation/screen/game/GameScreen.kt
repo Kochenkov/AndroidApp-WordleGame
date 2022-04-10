@@ -2,6 +2,7 @@ package com.vkochenkov.wordlegame.presentation.screen.game
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,10 +23,7 @@ import com.vkochenkov.wordlegame.KeyboardsStorage.Companion.ENTER_CHAR
 import com.vkochenkov.wordlegame.R
 import com.vkochenkov.wordlegame.model.Cell
 import com.vkochenkov.wordlegame.model.GameStatus
-import com.vkochenkov.wordlegame.presentation.theme.Gray
-import com.vkochenkov.wordlegame.presentation.theme.Green
-import com.vkochenkov.wordlegame.presentation.theme.Whiter
-import com.vkochenkov.wordlegame.presentation.theme.Yellow
+import com.vkochenkov.wordlegame.presentation.theme.*
 import com.vkochenkov.wordlegame.util.toCorrectString
 import org.koin.androidx.compose.getViewModel
 
@@ -50,7 +47,10 @@ fun GameScreen(
         EndGameDialog(viewModel, gameStatus, hiddenWord.toCorrectString(), navController)
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .background(
+                color = WordleTheme.colors.background
+            ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
@@ -91,18 +91,16 @@ private fun BoardCell(
     modifier: Modifier
 ) {
     Card(
-        backgroundColor =
-        when (cell.status) {
+        backgroundColor = when (cell.status) {
             Cell.Status.PRESENT -> Yellow
-            Cell.Status.WRONG -> Gray
+            Cell.Status.WRONG -> WordleTheme.colors.wrongCell
             Cell.Status.RIGHT -> Green
-            Cell.Status.DEFAULT -> Whiter
-            Cell.Status.PREFILL -> Whiter
+            else -> WordleTheme.colors.emptyCell
         },
         modifier = modifier
             .aspectRatio(1f)
             .padding(2.dp)
-            .border(BorderStroke(2.dp, Color.Black), MaterialTheme.shapes.medium)
+            .border(BorderStroke(2.dp, WordleTheme.colors.button), MaterialTheme.shapes.medium)
     ) {
         Box(
             contentAlignment = Alignment.Center
@@ -111,6 +109,7 @@ private fun BoardCell(
                 Text(
                     fontSize = 30.sp,
                     text = cell.letter.toString(),
+                    color = WordleTheme.colors.content
                 )
             }
         }
@@ -125,7 +124,7 @@ private fun KeyboardButton(
 ) {
     val context = LocalContext.current
 
-    Button(
+    MainButton(
         contentPadding = PaddingValues(0.dp),
         modifier = modifier
             .height(50.dp)
@@ -136,11 +135,11 @@ private fun KeyboardButton(
         colors = ButtonDefaults.buttonColors(
             backgroundColor = when (cell.status) {
                 Cell.Status.PRESENT -> Yellow
-                Cell.Status.WRONG -> Gray
+                Cell.Status.WRONG -> WordleTheme.colors.wrongCell
                 Cell.Status.RIGHT -> Green
-                Cell.Status.DEFAULT -> Whiter
-                Cell.Status.PREFILL -> Whiter
-            }
+                else -> WordleTheme.colors.button
+            },
+            contentColor = WordleTheme.colors.content
         )
     ) {
         if (cell.letter != null) {
@@ -178,6 +177,7 @@ private fun EndGameDialog(
 
     if (gameStatus == GameStatus.VICTORY || gameStatus == GameStatus.LOSE) {
         AlertDialog(
+            backgroundColor = WordleTheme.colors.background,
             onDismissRequest = {
                 viewModel.onBackPressed(navController, false)
             },
@@ -187,13 +187,19 @@ private fun EndGameDialog(
                     GameStatus.LOSE -> stringResource(R.string.lose)
                     else -> ""
                 }
-                Text(text)
+                Text(
+                    text = text,
+                    color = WordleTheme.colors.content
+                )
             },
             text = {
-                Text(stringResource(R.string.word_to_guess) + " " + hiddenWord)
+                Text(
+                    text = stringResource(R.string.word_to_guess) + " " + hiddenWord,
+                    color = WordleTheme.colors.content
+                )
             },
             confirmButton = {
-                Button(
+                MainButton(
                     onClick = {
                         viewModel.onNewGame()
                     }) {
@@ -201,7 +207,7 @@ private fun EndGameDialog(
                 }
             },
             dismissButton = {
-                Button(
+                MainButton(
                     onClick = {
                         viewModel.onBackPressed(navController, false)
                     }) {
