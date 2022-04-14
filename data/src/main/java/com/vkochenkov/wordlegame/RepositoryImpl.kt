@@ -47,6 +47,14 @@ class RepositoryImpl(
         return lengthSharedPrefs.getLength()
     }
 
+    override fun getLanguage(): Language {
+        return languageSharedPrefs.getLanguage()
+    }
+
+    override fun setLanguage(lang: Language) {
+        languageSharedPrefs.setLanguage(lang)
+    }
+
     override fun getRows(): Int {
         return DEFAULT_NUMBER_OF_ROWS
     }

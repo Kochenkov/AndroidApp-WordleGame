@@ -12,4 +12,6 @@
     <string name="enter">проверить</string>
     <string name="error_length">Слишком короткое слово</string>
     <string name="error_db">Слово не найдено</string>
+    <string name="game_lang">Язык загаданного слова:</string>
+    <string name="settings_prevention">После внесения изменений в настройки, текущая игра будет автоматически завершена</string>
 </resources>

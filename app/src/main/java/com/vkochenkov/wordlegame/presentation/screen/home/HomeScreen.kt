@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,11 +47,12 @@ fun HomeScreen(
         }
 
         item {
-            Item(R.string.settings) { }
+            Item(R.string.settings) { viewModel.onSettingsPressed(navController) }
         }
-        item {
-            Item(R.string.how_to_play) { }
-        }
+        //todo add after implementation screen
+//        item {
+//            Item(R.string.how_to_play) { }
+//        }
         item {
             Item(R.string.exit) {
                 viewModel.onBackPressed(context)

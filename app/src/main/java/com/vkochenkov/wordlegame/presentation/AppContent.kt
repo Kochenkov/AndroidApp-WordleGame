@@ -1,8 +1,6 @@
 package com.vkochenkov.wordlegame.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -12,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.vkochenkov.wordlegame.presentation.screen.game.GameScreen
 import com.vkochenkov.wordlegame.presentation.screen.home.HomeScreen
+import com.vkochenkov.wordlegame.presentation.screen.settings.SettingsScreen
 import com.vkochenkov.wordlegame.presentation.theme.WordleTheme
 
 @Composable
@@ -32,6 +31,12 @@ fun AppContent() {
                     }
                     composable(NavigationRoute.GAME.name) {
                         GameScreen(navController)
+                    }
+                    composable(NavigationRoute.SETTINGS.name) {
+                        SettingsScreen(navController)
+                    }
+                    composable(NavigationRoute.ABOUT.name) {
+                       // GameScreen(navController)
                     }
                 }
             }

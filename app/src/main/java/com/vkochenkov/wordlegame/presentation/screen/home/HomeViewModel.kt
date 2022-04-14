@@ -19,6 +19,11 @@ class HomeViewModel : ViewModel() {
         navController.navigate(NavigationRoute.GAME.name)
     }
 
+    fun onSettingsPressed(navController: NavController) {
+        MainActivity.isNewGame = false
+        navController.navigate(NavigationRoute.SETTINGS.name)
+    }
+
     fun onBackPressed(context: Context) {
         if (context is Activity) {
             context.onBackPressed()

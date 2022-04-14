@@ -12,4 +12,6 @@
     <string name="enter">enter</string>
     <string name="error_length">Word is too short</string>
     <string name="error_db">Word not found</string>
+    <string name="game_lang">Hidden word language:</string>
+    <string name="settings_prevention">After making changes to the settings, the current game will be automatically completed</string>
 </resources>
